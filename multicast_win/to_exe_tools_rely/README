@@ -2,13 +2,23 @@
 
 1.  安装NSIS程序以及HM NIS Edit程序。
 
-2.  将服务端/客户端脚本(位于to_exe_script下)和文件夹udptopoint-installpacket/udptomulti-installpacket
+2.  将代理程序脚本(位于to_exe_script下)和文件夹udptopoint-installpacket
     放到一个目录下。如果没有相关文件夹，请自行创建。
 
-3.  然后将udptopoint_rely_to_exe/udptomulti_rely_to_exe文件拷贝到上述install文件夹中。
+3.  然后将udptopoint_rely_to_exe文件拷贝到上述install文件夹中。
 
 4.  Sc.Exe, cygwin1.dll放入上述install文件夹中。
 
-5.  然后需要拷贝WinPcap.exe以及相应服务端/客户端程序、辅助reload程序和配置文件到上述install文件夹中。
+5.  然后需要拷贝WinPcap.exe以及相应代理程序、辅助reload程序和配置文件到上述install文件夹中。
+    File list:
+        cygwin1.dll
+        Sc.Exe
+        send_reload_point_cfg.exe
+        udptopoint.exe
+        server_cfg.json.txt
+        udptopoint_start.bat
+        udptopoint_stop.bat
+        udptopoint_reload.bat
+        WinPcap.exe
 
 6.  执行脚本。
