@@ -1,0 +1,19 @@
+文件夹说明
+
+proxy_server: 这个是多播代理服务端
+compile deploy：
+1. install cygwin
+2. install WpdPack
+    http://www.winpcap.org/install/default.htm
+   install the packet in C:\Program Files
+3. install json-c
+    https://github.com/json-c/json-c/
+   install the packet in C:\json
+
+tools_server: 这个是服务端辅助工具
+
+to_exe_tools_rely: 这个是生成可安装文件的依赖脚本及动态库
+1. install NSIS
+
+others:
+    DEV-CPP

@@ -1,0 +1,1 @@
+{"multi_group_array":[{"group_ip":"239.1.1.1","group_port":7127,"server_port":3456,"member_array":["2.2.2.2","3.3.3.3"]}]}

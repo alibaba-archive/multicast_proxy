@@ -1,0 +1,20 @@
+log_init[ok]
+num: 0
+num: 1
+gip:239.1.1.1 gport:7127 sport:7126
+ip_list_num:1
+
+num: 0
+num: 1
+gip:239.1.1.2 gport:7127 sport:7126
+ip_list_num:1
+
+num: 1
+gip:239.1.1.2 gport:7127 sport:7126
+ip_list_num:1
+
+num: 0
+num: 1
+gip:239.1.1.2 gport:7127 sport:7234
+ip_list_num:1
+

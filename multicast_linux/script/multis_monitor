@@ -1,0 +1,49 @@
+#!/bin/bash
+#########################################################################
+# File Name: multis_monitor monitor multis_admin running status
+#       if they no running start them
+# Author:
+# mail:
+# Created Time: Wed 17 Jul 2016 09:41:55 AM CST
+#########################################################################
+
+#level, msg
+
+PROG=multis_admin
+
+# 0 run; 1 stop
+function check_prog_status
+{
+    # if prog run return 0
+    pgrep -x ${PROG} > /dev/null
+    if [ $? -eq 0 ];then
+        return 0
+    fi
+
+    #sleep 1 seconds, ang try again
+    sleep 1
+    pgrep -x ${PROG} > /dev/null
+    if [ $? -eq 0 ];then
+        return 0
+    fi
+
+    return 1
+}
+
+function prog_restart
+{
+    logger -p user.warning -t "${PROG}" "Starting ${PROG}" $(date +"%T %D")
+    nohup /usr/local/bin/${PROG} -R &
+}
+
+export LD_LIBRARY_PATH=/usr/local/lib/
+while true
+do
+    if ! check_prog_status; then
+        echo "${PROG} status is stop"
+        logger -p user.warning -t "${PROG}" "prog status is stop. restarting" $(date +"%T %D")
+        prog_restart
+        continue
+    fi
+    sleep 1
+done
