@@ -1,0 +1,16 @@
+Prepare: open lib
+* json-c
+  Download: https://github.com/json-c/json-c
+* libpcap-1.7.4
+  Download: http://www.tcpdump.org/release/libpcap-1.7.4.tar.gz
+
+1. cd json-c
+2. ./configure
+3. make;make install
+
+4. cd libpcap-1.7.4
+5. ./configure
+6. make;make install
+
+7. ./mkrpm.sh
+
