@@ -1,0 +1,184 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+CC	Makefile	/^CC=gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS=-Wall -g -I..\/..\/include -I..\/..\/thirdpart\/json-c\/$/;"	m
+JSON_TYPE_ARRAY	base_config.c	/^#define JSON_TYPE_ARRAY /;"	d	file:
+LD_FLAGS	Makefile	/^LD_FLAGS=-L..\/..\/thirdpart\/json-c -ljson-c$/;"	m
+MAX_URL_LEN	../../include/base_control.h	/^#define MAX_URL_LEN /;"	d
+MULTI_DROP_STATS	../../include/tmcc_nl.h	/^    MULTI_DROP_STATS,$/;"	e	enum:__anon4
+MULTI_GROUP_ARRAY	multis_json_config.h	/^#define MULTI_GROUP_ARRAY /;"	d
+MULTI_GROUP_IP	multis_json_config.h	/^#define MULTI_GROUP_IP /;"	d
+MULTI_GRP_BUCKET	../../include/grp.h	/^#define     MULTI_GRP_BUCKET /;"	d
+MULTI_GRP_DEPTH	../../include/grp.h	/^#define     MULTI_GRP_DEPTH	/;"	d
+MULTI_GRP_MAX	../../include/grp.h	/^#define	 MULTI_GRP_MAX	/;"	d
+MULTI_IDX_EXHAUST	../../include/grp.h	/^    MULTI_IDX_EXHAUST,$/;"	e	enum:__anon1
+MULTI_MEMBER_ARRAY	multis_json_config.h	/^#define MULTI_MEMBER_ARRAY /;"	d
+MULTI_NL	../../include/tmcc_nl.h	/^#define MULTI_NL /;"	d
+MULTI_NODE_EXSIT	../../include/grp.h	/^    MULTI_NODE_EXSIT = 1000,$/;"	e	enum:__anon1
+MULTI_NODE_NOT_EXSIT	../../include/grp.h	/^    MULTI_NODE_NOT_EXSIT,$/;"	e	enum:__anon1
+MULTI_OPT_JOIN	../../include/tmcc_nl.h	/^    MULTI_OPT_JOIN=1,$/;"	e	enum:__anon3
+MULTI_OPT_QUIT	../../include/tmcc_nl.h	/^    MULTI_OPT_QUIT$/;"	e	enum:__anon3
+MULTI_PARAM_ERROR	../../include/grp.h	/^    MULTI_PARAM_ERROR,$/;"	e	enum:__anon1
+MULTI_SERVER_CLEAR	../../include/tmcc_nl.h	/^    MULTI_SERVER_CLEAR,$/;"	e	enum:__anon4
+MULTI_SERVER_CONFIG_FILE	multis_json_config.h	/^#define MULTI_SERVER_CONFIG_FILE /;"	d
+MULTI_VM_LAGER_THAN_MAX	../../include/grp.h	/^    MULTI_VM_LAGER_THAN_MAX$/;"	e	enum:__anon1
+MULTI_VM_MAX	../../include/grp.h	/^#define     MULTI_VM_MAX /;"	d
+OBJS	Makefile	/^OBJS=app_control.o comm_kernel.o json_config.o base_config.o$/;"	m
+PRINT_HIP	../../include/grp.h	/^#define  PRINT_HIP(/;"	d
+PRINT_IP_FORMAT	../../include/base_control.h	/^#define PRINT_IP_FORMAT /;"	d
+PRINT_IP_FORMAT	../../include/grp.h	/^#define PRINT_IP_FORMAT /;"	d
+PRINT_NIP	../../include/base_control.h	/^#define  PRINT_NIP(/;"	d
+PROGS	Makefile	/^PROGS=multis_admin$/;"	m
+TMCC_ALLOC_SKB_FAIL	../../include/tmcc_nl.h	/^    TMCC_ALLOC_SKB_FAIL,    $/;"	e	enum:__anon2
+TMCC_APP_CMD_ADD	app_control.c	/^	TMCC_APP_CMD_ADD = 0,$/;"	e	enum:__anon5	file:
+TMCC_APP_CMD_CLEAR	app_control.c	/^    TMCC_APP_CMD_CLEAR,$/;"	e	enum:__anon5	file:
+TMCC_APP_CMD_DEL	app_control.c	/^	TMCC_APP_CMD_DEL,$/;"	e	enum:__anon5	file:
+TMCC_APP_CMD_DROP_STATS	app_control.c	/^	TMCC_APP_CMD_DROP_STATS,$/;"	e	enum:__anon5	file:
+TMCC_APP_CMD_LIST	app_control.c	/^	TMCC_APP_CMD_LIST$/;"	e	enum:__anon5	file:
+TMCC_APP_CMD_SHOW	app_control.c	/^	TMCC_APP_CMD_SHOW,$/;"	e	enum:__anon5	file:
+TMCC_CMD_ADDR_TRANS_ERROR	../../include/tmcc_nl.h	/^	TMCC_CMD_ADDR_TRANS_ERROR,$/;"	e	enum:__anon2
+TMCC_CMD_OPTION_ERROR	../../include/tmcc_nl.h	/^	TMCC_CMD_OPTION_ERROR,$/;"	e	enum:__anon2
+TMCC_CMD_PARAMS_NULL	../../include/tmcc_nl.h	/^	TMCC_CMD_PARAMS_NULL,$/;"	e	enum:__anon2
+TMCC_CMD_U32_TRANS_ERROR	../../include/tmcc_nl.h	/^	TMCC_CMD_U32_TRANS_ERROR,$/;"	e	enum:__anon2
+TMCC_COPY_TO_USER_FAIL	../../include/tmcc_nl.h	/^    TMCC_COPY_TO_USER_FAIL,$/;"	e	enum:__anon2
+TMCC_CREATE_PROC_ENTRY_FAIL	../../include/tmcc_nl.h	/^    TMCC_CREATE_PROC_ENTRY_FAIL,$/;"	e	enum:__anon2
+TMCC_DISABLE_BFD	../../include/tmcc_nl.h	/^    TMCC_DISABLE_BFD,$/;"	e	enum:__anon4
+TMCC_ENABLE_BFD	../../include/tmcc_nl.h	/^    TMCC_ENABLE_BFD,$/;"	e	enum:__anon4
+TMCC_GATEWAY_EXIST	../../include/tmcc_nl.h	/^    TMCC_GATEWAY_EXIST,$/;"	e	enum:__anon2
+TMCC_GATEWAY_FULL	../../include/tmcc_nl.h	/^    TMCC_GATEWAY_FULL,$/;"	e	enum:__anon2
+TMCC_GATEWAY_NOT_EXIST	../../include/tmcc_nl.h	/^    TMCC_GATEWAY_NOT_EXIST,$/;"	e	enum:__anon2
+TMCC_GET_GW_FAIL	../../include/tmcc_nl.h	/^    TMCC_GET_GW_FAIL,$/;"	e	enum:__anon2
+TMCC_GW_ADD	../../include/tmcc_nl.h	/^    TMCC_GW_ADD,$/;"	e	enum:__anon4
+TMCC_GW_CHECK_UPDATE	../../include/tmcc_nl.h	/^	TMCC_GW_CHECK_UPDATE,$/;"	e	enum:__anon4
+TMCC_GW_DEL	../../include/tmcc_nl.h	/^    TMCC_GW_DEL,$/;"	e	enum:__anon4
+TMCC_GW_GET	../../include/tmcc_nl.h	/^    TMCC_GW_GET,$/;"	e	enum:__anon4
+TMCC_GW_LIST	../../include/tmcc_nl.h	/^    TMCC_GW_LIST,$/;"	e	enum:__anon4
+TMCC_IP_LIST_TOO_LONG	../../include/tmcc_nl.h	/^    TMCC_IP_LIST_TOO_LONG,$/;"	e	enum:__anon2
+TMCC_MEMORY_ALLOC_FAIL	../../include/tmcc_nl.h	/^    TMCC_MEMORY_ALLOC_FAIL,$/;"	e	enum:__anon2
+TMCC_MSG_TIMEOUT	../../include/tmcc_nl.h	/^#define TMCC_MSG_TIMEOUT /;"	d
+TMCC_OK	../../include/tmcc_nl.h	/^    TMCC_OK = 0,$/;"	e	enum:__anon2
+TMCC_OPT_EXIT	app_control.c	/^#define TMCC_OPT_EXIT /;"	d	file:
+TMCC_OPT_JOIN	app_control.c	/^#define TMCC_OPT_JOIN /;"	d	file:
+TMCC_OPT_MEM_IPLIST	app_control.c	/^#define TMCC_OPT_MEM_IPLIST /;"	d	file:
+TMCC_OPT_MULTI_IP	app_control.c	/^#define TMCC_OPT_MULTI_IP /;"	d	file:
+TMCC_PKT_STATS_GW	../../include/tmcc_nl.h	/^    TMCC_PKT_STATS_GW,$/;"	e	enum:__anon4
+TMCC_PKT_STATS_OVERVIEW	../../include/tmcc_nl.h	/^    TMCC_PKT_STATS_OVERVIEW,$/;"	e	enum:__anon4
+TMCC_POLICY_TABLE_FULL	../../include/tmcc_nl.h	/^    TMCC_POLICY_TABLE_FULL,$/;"	e	enum:__anon2
+TMCC_SERVICE_ADD	../../include/tmcc_nl.h	/^    TMCC_SERVICE_ADD = 0,$/;"	e	enum:__anon4
+TMCC_SERVICE_CHECK_UPDATE	../../include/tmcc_nl.h	/^    TMCC_SERVICE_CHECK_UPDATE,$/;"	e	enum:__anon4
+TMCC_SERVICE_DEL	../../include/tmcc_nl.h	/^    TMCC_SERVICE_DEL,$/;"	e	enum:__anon4
+TMCC_SERVICE_EXIST	../../include/tmcc_nl.h	/^    TMCC_SERVICE_EXIST = 1000,$/;"	e	enum:__anon2
+TMCC_SERVICE_FULL	../../include/tmcc_nl.h	/^    TMCC_SERVICE_FULL,$/;"	e	enum:__anon2
+TMCC_SERVICE_INFO_LIST	../../include/tmcc_nl.h	/^    TMCC_SERVICE_INFO_LIST,$/;"	e	enum:__anon4
+TMCC_SERVICE_LIST	../../include/tmcc_nl.h	/^    TMCC_SERVICE_LIST,$/;"	e	enum:__anon4
+TMCC_SERVICE_NOT_EXIST	../../include/tmcc_nl.h	/^    TMCC_SERVICE_NOT_EXIST,$/;"	e	enum:__anon2
+TMCC_SERVICE_SHOW	../../include/tmcc_nl.h	/^    TMCC_SERVICE_SHOW,$/;"	e	enum:__anon4
+TMCC_SERVICE_UPDATE	../../include/tmcc_nl.h	/^    TMCC_SERVICE_UPDATE,$/;"	e	enum:__anon4
+TMCC_SESSION_CLEAR	../../include/tmcc_nl.h	/^    TMCC_SESSION_CLEAR,$/;"	e	enum:__anon4
+TMCC_SESSION_COUNT_TOO_MUCH	../../include/tmcc_nl.h	/^    TMCC_SESSION_COUNT_TOO_MUCH$/;"	e	enum:__anon2
+TMCC_SESSION_LIST	../../include/tmcc_nl.h	/^    TMCC_SESSION_LIST,$/;"	e	enum:__anon4
+TMCC_SWITCH	../../include/tmcc_nl.h	/^	TMCC_SWITCH,$/;"	e	enum:__anon4
+TMCC_SWITCH_LIST	../../include/tmcc_nl.h	/^	TMCC_SWITCH_LIST$/;"	e	enum:__anon4
+VALUE_IS_NEGATIVE_GOTO	multis_json_config.h	/^#define VALUE_IS_NEGATIVE_GOTO(/;"	d
+VALUE_IS_NEGATIVE_PRINT_AND_RETURN	multis_json_config.h	/^#define VALUE_IS_NEGATIVE_PRINT_AND_RETURN(/;"	d
+VALUE_IS_NOTNULL_RETURN	multis_json_config.h	/^#define VALUE_IS_NOTNULL_RETURN(/;"	d
+VALUE_IS_NULL_GOTO	multis_json_config.h	/^#define VALUE_IS_NULL_GOTO(/;"	d
+VALUE_IS_NULL_PRINT_AND_GOTO_FAIL	multis_json_config.h	/^#define VALUE_IS_NULL_PRINT_AND_GOTO_FAIL(/;"	d
+VALUE_IS_NULL_PRINT_AND_RETURN	multis_json_config.h	/^#define VALUE_IS_NULL_PRINT_AND_RETURN(/;"	d
+VALUE_IS_NULL_RETURN	multis_json_config.h	/^#define VALUE_IS_NULL_RETURN(/;"	d
+_TMC_CMD_COMMON_H_	parse_arg.h	/^#define _TMC_CMD_COMMON_H_$/;"	d
+__BASE_CONTROL__	../../include/base_control.h	/^#define __BASE_CONTROL__$/;"	d
+__MULTI_H__	../../include/grp.h	/^#define __MULTI_H__$/;"	d
+__MULTI_JSON_CONFIG__	multis_json_config.h	/^#define __MULTI_JSON_CONFIG__$/;"	d
+__TMCC_H__	../../include/tmcc_nl.h	/^#define __TMCC_H__$/;"	d
+__TMCC_NF_H__	../../include/nf.h	/^#define __TMCC_NF_H__$/;"	d
+__TMCC_NL_H__	../../include/nl.h	/^#define __TMCC_NL_H__$/;"	d
+__multi_grp_add_to_config	json_config.c	/^int __multi_grp_add_to_config(struct tmcc_nl_service_st *grp)$/;"	f
+__multi_grp_config_init	json_config.c	/^static int __multi_grp_config_init(char * filepath)$/;"	f	file:
+__multi_grp_del_from_config	json_config.c	/^int __multi_grp_del_from_config(struct tmcc_nl_service_st *grp)$/;"	f
+__multi_server_config_clear	json_config.c	/^void __multi_server_config_clear(void)$/;"	f
+action	../../include/grp.h	/^    uint8_t action;$/;"	m	struct:tmcc_nl_service_st
+check_repeated	parse_arg.h	/^int check_repeated(uint32_t ip, struct tmcc_nl_service_st *service)$/;"	f
+created	../../include/grp.h	/^    uint8_t created;$/;"	m	struct:multi_node
+data	../../include/grp.h	/^    char    data[0];$/;"	m	struct:tmcc_msg_st
+err	../../include/grp.h	/^    struct nlmsgerr		err;$/;"	m	struct:tmcc_reply_st	typeref:struct:tmcc_reply_st::nlmsgerr
+hdr	../../include/grp.h	/^    struct  nlmsghdr hdr;$/;"	m	struct:tmcc_msg_st	typeref:struct:tmcc_msg_st::nlmsghdr
+hdr	../../include/grp.h	/^    struct nlmsghdr     hdr;$/;"	m	struct:tmcc_reply_st	typeref:struct:tmcc_reply_st::nlmsghdr
+ip2str	json_config.c	/^static const char *ip2str(uint32_t ip)  $/;"	f	file:
+ip_list	../../include/grp.h	/^    uint32_t ip_list[MULTI_VM_MAX];$/;"	m	struct:tmcc_nl_service_st
+ip_list	../../include/grp.h	/^    uint32_t ip_list[MULTI_VM_MAX];$/;"	m	struct:tmcc_nl_show_service_st
+ip_num	../../include/grp.h	/^    uint32_t ip_num;$/;"	m	struct:tmcc_nl_service_st
+ip_num	../../include/grp.h	/^    uint32_t ip_num;$/;"	m	struct:tmcc_nl_show_service_st
+isalldigit	parse_arg.h	/^static inline int isalldigit(char *arg)$/;"	f
+json_get_multi_group_array	json_config.c	/^struct json_object *json_get_multi_group_array(struct json_object **root)$/;"	f
+long_opts	app_control.c	/^static const struct option long_opts[] = {$/;"	v	typeref:struct:option	file:
+main	app_control.c	/^int main(int argc, char **argv)$/;"	f
+multi_drop_stats	comm_kernel.c	/^int multi_drop_stats(struct tmcc_nl_service_st *serv, uint32_t datalen)$/;"	f
+multi_grp_add_to_config	json_config.c	/^int multi_grp_add_to_config(struct tmcc_nl_service_st *grp)$/;"	f
+multi_grp_config_init	json_config.c	/^int multi_grp_config_init(char * filepath)$/;"	f
+multi_grp_del_from_config	json_config.c	/^int multi_grp_del_from_config(struct tmcc_nl_service_st *grp)$/;"	f
+multi_grp_idx	../../include/grp.h	/^    uint8_t multi_grp_idx;$/;"	m	struct:multi_node
+multi_ip	../../include/grp.h	/^    uint32_t 	multi_ip;$/;"	m	struct:multi_key
+multi_ip	../../include/grp.h	/^    uint32_t multi_ip;$/;"	m	struct:multi_node
+multi_ip	../../include/grp.h	/^    uint32_t multi_ip;$/;"	m	struct:tmcc_nl_service_st
+multi_ip	../../include/grp.h	/^    uint32_t multi_ip;$/;"	m	struct:tmcc_nl_show_service_st
+multi_key	../../include/grp.h	/^struct multi_key$/;"	s
+multi_member_cnt	../../include/grp.h	/^    uint32_t multi_member_cnt;$/;"	m	struct:multi_node
+multi_node	../../include/grp.h	/^struct multi_node$/;"	s
+multi_range_num	parse_arg.h	/^static inline int multi_range_num(char *arg)$/;"	f
+multi_server_clear_from_kernel	comm_kernel.c	/^int multi_server_clear_from_kernel(void)$/;"	f
+multi_server_config_clear	json_config.c	/^int multi_server_config_clear(void)$/;"	f
+multi_server_drop_stats	../../include/grp.h	/^struct multi_server_drop_stats{$/;"	s
+multi_stats_st	../../include/grp.h	/^struct multi_stats_st{$/;"	s
+n_json_del_element_from_array_by_idx	base_config.c	/^int n_json_del_element_from_array_by_idx( struct json_object * obj, int idx )$/;"	f
+nf_file_lock	base_config.c	/^int nf_file_lock(char * filename)$/;"	f
+nf_file_unlock	base_config.c	/^int nf_file_unlock(int fd)$/;"	f
+nf_json_config_get_root	base_config.c	/^int nf_json_config_get_root(char *configfile, const char *key, json_object **root, json_object **root_config)$/;"	f
+nf_json_config_init_array	base_config.c	/^int nf_json_config_init_array(json_object *parent, const char *childkey, json_object **child)$/;"	f
+nf_json_config_init_int	base_config.c	/^int nf_json_config_init_int(json_object *parent, const char *childkey, json_object **child, int value)$/;"	f
+nf_json_config_init_object	base_config.c	/^int nf_json_config_init_object(json_object *parent, const char *childkey, json_object **child)$/;"	f
+nf_json_config_init_string	base_config.c	/^int nf_json_config_init_string(json_object *parent, const char *childkey, json_object **child, const char *str)$/;"	f
+nf_json_config_root_init	base_config.c	/^int nf_json_config_root_init(json_object **root)$/;"	f
+no_mem_drop_count	../../include/grp.h	/^    uint64_t no_mem_drop_count;$/;"	m	struct:multi_server_drop_stats
+no_multi_grp_pkt_drop_count	../../include/grp.h	/^    uint64_t no_multi_grp_pkt_drop_count;$/;"	m	struct:multi_server_drop_stats
+no_multi_member_pkt_drop_count	../../include/grp.h	/^    uint64_t no_multi_member_pkt_drop_count; $/;"	m	struct:multi_server_drop_stats
+parse_ip_be	parse_arg.h	/^static inline int parse_ip_be(char *arg, uint32_t *ip)$/;"	f
+parse_service	parse_arg.h	/^static inline int parse_service(char *ipstr, struct tmcc_nl_service_st *service)$/;"	f
+parse_u32	parse_arg.h	/^static inline int parse_u32(char *arg, uint32_t *num)$/;"	f
+print_drop_stats_info	comm_kernel.c	/^static void print_drop_stats_info(struct multi_server_drop_stats *stats, uint8_t action)$/;"	f	file:
+print_error	app_control.c	/^void print_error(char *action, int errno)$/;"	f
+print_multi_grp_ip	comm_kernel.c	/^void print_multi_grp_ip(struct tmcc_nl_show_service_st *service)$/;"	f
+print_usage	app_control.c	/^static void print_usage()$/;"	f	file:
+print_vm_ip_info	comm_kernel.c	/^void print_vm_ip_info(struct tmcc_nl_show_service_st *service)$/;"	f
+prog_name	app_control.c	/^static const char *prog_name;$/;"	v	file:
+reply_ptr	../../include/grp.h	/^    void    *reply_ptr;$/;"	m	struct:tmcc_msg_st
+ret	../../include/grp.h	/^    int ret;$/;"	m	struct:tmcc_nl_service_st
+ret	../../include/grp.h	/^    int ret;$/;"	m	struct:tmcc_nl_show_service_st
+ret	../../include/grp.h	/^    uint8_t ret;$/;"	m	struct:multi_server_drop_stats
+route_fail_drop_count	../../include/grp.h	/^    uint64_t route_fail_drop_count;$/;"	m	struct:multi_server_drop_stats
+service	app_control.c	/^struct tmcc_nl_service_st service;$/;"	v	typeref:struct:tmcc_nl_service_st
+short_opt	app_control.c	/^static const char *short_opt = "ADCPLSHm:j:q:";$/;"	v	file:
+skfd	comm_kernel.c	/^static int skfd;$/;"	v	file:
+tmcc_comm_kernel_finish	../../include/base_control.h	/^#define tmcc_comm_kernel_finish(/;"	d
+tmcc_comm_kernel_prepare	../../include/base_control.h	/^#define tmcc_comm_kernel_prepare(/;"	d
+tmcc_msg_st	../../include/grp.h	/^struct tmcc_msg_st{$/;"	s
+tmcc_nl_service_add	app_control.c	/^int tmcc_nl_service_add(struct tmcc_nl_service_st *service)$/;"	f
+tmcc_nl_service_clear	app_control.c	/^int tmcc_nl_service_clear(void)$/;"	f
+tmcc_nl_service_del	app_control.c	/^int tmcc_nl_service_del(struct tmcc_nl_service_st *service)$/;"	f
+tmcc_nl_service_list	app_control.c	/^int tmcc_nl_service_list(struct tmcc_nl_service_st *service)$/;"	f
+tmcc_nl_service_show	app_control.c	/^int tmcc_nl_service_show(struct tmcc_nl_service_st *service)$/;"	f
+tmcc_nl_service_st	../../include/grp.h	/^struct tmcc_nl_service_st$/;"	s
+tmcc_nl_show_service_st	../../include/grp.h	/^struct tmcc_nl_show_service_st{$/;"	s
+tmcc_reply_st	../../include/grp.h	/^struct  tmcc_reply_st{$/;"	s
+tmcc_service_add_to_kernel	comm_kernel.c	/^int tmcc_service_add_to_kernel(struct tmcc_nl_service_st *serv, uint32_t datalen)$/;"	f
+tmcc_service_delete_from_kernel	comm_kernel.c	/^int tmcc_service_delete_from_kernel(struct tmcc_nl_service_st *serv, uint32_t datalen)$/;"	f
+tmcc_service_list	comm_kernel.c	/^int tmcc_service_list(struct tmcc_nl_service_st *serv, uint32_t datalen)$/;"	f
+tmcc_service_show	comm_kernel.c	/^int tmcc_service_show(struct tmcc_nl_service_st *serv, uint32_t datalen)$/;"	f
+tx_bytes	../../include/grp.h	/^    uint64_t tx_bytes;$/;"	m	struct:multi_server_drop_stats
+tx_bytes	../../include/grp.h	/^    uint64_t tx_bytes;$/;"	m	struct:multi_stats_st
+tx_packets	../../include/grp.h	/^    uint64_t tx_packets;$/;"	m	struct:multi_server_drop_stats
+tx_packets	../../include/grp.h	/^    uint64_t tx_packets;$/;"	m	struct:multi_stats_st

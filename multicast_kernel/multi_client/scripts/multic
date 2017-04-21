@@ -1,0 +1,119 @@
+#!/bin/sh
+#########################################################################
+# File Name: multic  this is script can start/stop/restart multicast client
+# Author: Alibaba
+# mail: None
+# Created Time: Fri 7 Nov 2014 04:14:04 PM CST
+#########################################################################
+
+#chkconfig: 345 98 02
+#description: multicast client  Startup Script
+
+source /etc/rc.d/init.d/functions
+
+#multicast client initializing parameters
+CONFIG_PATH=/usr/local/etc
+BIN_PATH=/usr/local/sbin
+KMOD_PATH=/usr/local/src/multic/kmod
+
+TMCC_MODULE=multi_client
+
+# export env
+export PATH=$PATH:$BIN_PATH
+
+RETVAL=0
+
+unload_kernel_module()
+{
+    echo "Unloading  existing $TMCC_MODULE module"
+    /sbin/lsmod | grep -s $TMCC_MODULE > /dev/null
+    if [ $? -eq 0 ] ; then
+        /sbin/rmmod $TMCC_MODULE
+    fi
+}
+
+load_kernel_module()
+{
+    if [ ! -f ${KMOD_PATH}/${TMCC_MODULE}.ko ];then
+        echo "## ERROR: Target does not have the multicast client Kernel Module."
+        echo "       To fix, please try to install multicast client rpm toolkits."
+        exit 1
+    fi
+
+    # if existed 
+    /sbin/lsmod | grep -s $TMCC_MODULE > /dev/null
+    if [ $? -eq 0 ] ; then
+        echo " $TMCC_MODULE is existed, please unload it..."
+        exit 1 
+    fi
+
+
+    # install multicast client 
+    echo "Loading $TMCC_MODULE module"
+
+    /sbin/insmod ${KMOD_PATH}/${TMCC_MODULE}.ko
+    if [ $? -ne 0 ] ; then
+        echo "## ERROR: Could not load kmod/${TMCC_MODULE}.ko."
+        exit 1
+    fi
+}
+
+start() 
+{
+    if [ `id -u` -ne 0 ]; then
+        echo "******Critical ERROR: Please re-run as root or sudo"
+        exit 1
+    fi
+
+	if [ -f $CONFIG_PATH/multi_client_running_config ]; then
+		rm -f $CONFIG_PATH/multi_client_running_config
+	fi
+
+    #load multicast client kernel
+    load_kernel_module
+
+	echo "load configure"
+	$BIN_PATH/multic_config_admin -R
+
+    echo "[OK]"
+}
+
+stop() 
+{
+    if [ `id -u` -ne 0 ]; then
+        echo "******Critical ERROR: Please re-run as root or sudo"
+        exit 1
+    fi
+
+    #unload kernel_module
+    unload_kernel_module
+
+	#delete config
+	echo "save configure"
+	if [ -f $CONFIG_PATH/multi_client_running_config ]; then
+		mv $CONFIG_PATH/multi_client_running_config $CONFIG_PATH/multi_client_startup_config
+		rm -f $CONFIG_PATH/multi_client_running_config
+	fi
+
+    echo "[OK]"
+    RETVAL=0
+    return $RETVAL
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  restart)
+    stop
+    start
+    ;;
+  *)
+    echo $"Usage: $PROG {start|stop|restart}"
+    exit 1
+esac
+
+exit $RETVAL

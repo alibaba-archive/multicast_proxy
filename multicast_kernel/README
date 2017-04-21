@@ -1,0 +1,6 @@
+
+1. sh tmcc_server_auto_rpm.sh 生成服务端rpm安装包
+2. sh tmcc_client_auto_rpm.sh 生成客户端rpm安装包
+
+tips:
+   make sure the rpm of kernel-devel has been installed in the linux.
