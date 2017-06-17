@@ -1,1 +1,0 @@
-{"multi_server_info_array":[{"server_ip":"1.1.1.1","server_port":7126,"group_ip":"239.254.1.1","group_port":7127}]}

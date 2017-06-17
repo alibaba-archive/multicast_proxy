@@ -7,7 +7,7 @@ Group:      Alibaba/Application
 License:    Proprietary
 Source0:    %{name}-%{version}.tar.gz
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root
-Packager:
+Packager:   Alibaba/Aliyun
 
 AutoReqProv: no
 
@@ -29,8 +29,6 @@ mkdir -p %{buildroot}/usr/local/lib
 
 cp -rf server_proxy/multis_admin %{buildroot}/usr/local/bin/
 cp -rf server_tools/server_reload_list %{buildroot}/usr/local/bin/
-cp -rf client_proxy/multic_admin %{buildroot}/usr/local/bin/
-cp -rf client_tools/client_reload_list %{buildroot}/usr/local/bin/
 
 mkdir -p %{buildroot}/etc/init.d/
 chmod 755 ./script/multis_monitord
@@ -57,8 +55,6 @@ rm -rf $RPM_BUILD_ROOT
 /usr/local/bin/multis_monitor
 /usr/local/bin/multis_admin
 /usr/local/bin/server_reload_list
-/usr/local/bin/multic_admin
-/usr/local/bin/client_reload_list
 /usr/local/bin/multis_monitord
 /etc/init.d/multis_monitord
 %config(noreplace) /etc/multicast/*

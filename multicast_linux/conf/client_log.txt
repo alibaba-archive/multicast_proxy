@@ -1,2 +1,0 @@
-log_init[ok]
-num: 0
