@@ -1,3 +1,5 @@
+[Add patch kernel_v4.0.patch]
+if your kernel version is bigger than 4.0, you can add the patch kernel_v4.0.patch in the dir patch.
 
 1. sh tmcc_server_auto_rpm.sh 生成服务端rpm安装包
 2. sh tmcc_client_auto_rpm.sh 生成客户端rpm安装包
