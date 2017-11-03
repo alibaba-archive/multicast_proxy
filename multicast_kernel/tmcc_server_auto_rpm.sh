@@ -22,8 +22,6 @@ mkdir -p $RPM_PATH/SPECS
 mkdir -p $RPM_PATH/SRPMS
 echo "%_topdir $RPM_PATH" >~/.rpmmacros
 
-cd $TMCC_PATH/multicast/multicast
-
 cp -rf multi_server multi_server-$TMCC_VERSION
 
 if [ -f multi_server-$TMCC_VERSION.tar.bz2 ];then
