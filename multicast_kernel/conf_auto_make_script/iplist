@@ -1,3 +1,5 @@
+# Line1 multi_ip multi_port
+# Line2-n ip
 239.254.1.2 65535
 192.168.1.1
 192.168.1.2

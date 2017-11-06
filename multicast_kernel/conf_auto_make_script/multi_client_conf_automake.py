@@ -3,7 +3,7 @@
 import json, os, commands, sys
 
 FILENAME="iplist"
-### Format
+### Format iplist
 ##Line1 multi_ip multi_port
 ##Line2-n normal_ip
 
