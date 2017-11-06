@@ -31,6 +31,9 @@ def conf_init(filename):
             if '#' in line:
                 continue
 
+            if len(line) < 7:
+                continue
+
             if i == 0:
                 json_cfg["multi_group_array"][0]["group_ip"] = line.strip('\n').split()[0]
                 i = 1

@@ -6,3 +6,10 @@ if your kernel version is bigger than 4.0, you can add the patch kernel_v4.0.pat
 
 tips:
    make sure the rpm of kernel-devel has been installed in the linux.
+
+Start on linux boot:
+   chkconfig multis on --level 2345
+   chkconfig multis off --level 016
+
+   chkconfig multic on --level 2345
+   chkconfig multic off --level 016

@@ -34,6 +34,9 @@ def conf_init(filename):
             if '#' in line:
                 continue
 
+            if len(line) < 7:
+                continue
+
             if i == 0:
                 multi_ip, multi_port = line.strip('\n').split()
                 i = 1
