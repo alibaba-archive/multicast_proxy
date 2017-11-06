@@ -65,4 +65,4 @@ if __name__ == "__main__":
     if (status != 0):
         print "client config auto make error"
 
-    print "client config auto make ok, please restart multis service"
+    print "client config auto make ok, please restart multic service"
