@@ -4,3 +4,6 @@ Usage:
 
     multi_client_conf_automake.py/multi_server_conf_automake.py depends on the configure file which is iplist.
     The format of iplist that you can get from the example iplist.
+
+Tips:
+    auto make configure will be not include local server ip.

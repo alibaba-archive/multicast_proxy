@@ -71,6 +71,7 @@ start()
 
     #load multicast client kernel
     load_kernel_module
+    touch /var/lock/subsys/multic
 
 	echo "load configure"
 	$BIN_PATH/multic_config_admin -R
@@ -87,6 +88,7 @@ stop()
 
     #unload kernel_module
     unload_kernel_module
+    rm -rf /var/lock/subsys/multic
 
 	#delete config
 	echo "save configure"
