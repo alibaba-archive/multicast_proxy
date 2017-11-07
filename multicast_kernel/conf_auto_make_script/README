@@ -1,6 +1,6 @@
 Usage:
-    python multi_client_conf_automake.py or 
-        python multi_server_conf_automake.py
+    python multi_client_conf_automake.py iplist or
+        python multi_server_conf_automake.py iplist
 
     multi_client_conf_automake.py/multi_server_conf_automake.py depends on the configure file which is iplist.
     The format of iplist that you can get from the example iplist.
