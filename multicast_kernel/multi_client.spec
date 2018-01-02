@@ -48,7 +48,3 @@ rm -rf $RPM_BUILD_ROOT
 /usr/local/sbin/*
 /usr/local/src/multic/kmod/*
 /etc/init.d/multic                                                                          
-
-%changelog
-* Fri Nov 4 2014   alibaba <None> 0.1.0
-- test version
