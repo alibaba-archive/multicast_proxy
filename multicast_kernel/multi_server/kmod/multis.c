@@ -3,6 +3,7 @@
 #include <net/tcp.h>
 #include <linux/udp.h>
 #include <linux/tcp.h>
+#include <linux/module.h>
 
 #include "tmcc_nl.h"
 #include "grp.h"
@@ -51,3 +52,4 @@ module_init(multi_init);
 module_exit(multi_fini);
 
 MODULE_LICENSE("GPL");
+MODULE_AUTHOR("ALIBABA");
