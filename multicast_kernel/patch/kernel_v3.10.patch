@@ -1,0 +1,178 @@
+diff --git a/multicast_kernel/multi_client/kmod/multic_nf.c b/multicast_kernel/multi_client/kmod/multic_nf.c
+index 69329e4..ccbc79a 100644
+--- a/multicast_kernel/multi_client/kmod/multic_nf.c
++++ b/multicast_kernel/multi_client/kmod/multic_nf.c
+@@ -21,11 +21,13 @@ void get_all_multi_packets_stats(struct multic_packets_stats_st *stats)
+ }
+ 
+ #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
+-unsigned int tmcc_hook_local_in(unsigned int hook, struct sk_buff **pskb, 
++static unsigned int tmcc_hook_local_in(unsigned int hook, struct sk_buff **pskb,
+    const struct net_device *in,const struct net_device *out, int (*okfn)(struct sk_buff *))
+-#else
+-unsigned int tmcc_hook_local_in(unsigned int hook, struct sk_buff *skb, 
++#elif  LINUX_VERSION_CODE <= KERNEL_VERSION(4,0,0)
++static unsigned int tmcc_hook_local_in(unsigned int hook, struct sk_buff *skb,
+    const struct net_device *in,const struct net_device *out, int (*okfn)(struct sk_buff *))
++#else
++static unsigned int tmcc_hook_local_in(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
+ #endif
+ {
+ #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
+diff --git a/multicast_kernel/multi_client/kmod/multic_nl.c b/multicast_kernel/multi_client/kmod/multic_nl.c
+index 2a9f75e..64fd5be 100644
+--- a/multicast_kernel/multi_client/kmod/multic_nl.c
++++ b/multicast_kernel/multi_client/kmod/multic_nl.c
+@@ -193,15 +193,12 @@ static void tmcc_rcv_sock(struct sock *sk, int len)
+ int multi_nl_init(void)
+ {
+     /*netlink varies greatly in different kernel version, so in fact we only cover 2.6.32 and 3.10 kernel version.*/
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,0,0) 
+-    /*
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,10,0)
+     struct netlink_kernel_cfg cfg = { 
+         .input  = tmcc_rcv_skb,
+     };  
+ 
+     multi_nl_sk = netlink_kernel_create(&init_net, MULTI_NL, &cfg);
+-    */
+-    multi_nl_sk = netlink_kernel_create(&init_net, MULTI_NL, 0, tmcc_rcv_skb, NULL, THIS_MODULE);
+ #elif LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18) 
+     multi_nl_sk = netlink_kernel_create(MULTI_NL, 0, tmcc_rcv_sock, THIS_MODULE);
+ #else
+diff --git a/multicast_kernel/multi_client/tools/multi_client_control/base_config.c b/multicast_kernel/multi_client/tools/multi_client_control/base_config.c
+index db243b1..2ad9fd6 100644
+--- a/multicast_kernel/multi_client/tools/multi_client_control/base_config.c
++++ b/multicast_kernel/multi_client/tools/multi_client_control/base_config.c
+@@ -26,7 +26,7 @@ int nf_file_lock(char * filename)
+     ret = flock(fd, LOCK_EX); 
+     if(ret < 0){
+         close(fd);
+-        return ret; 
++        return ret;
+     }
+ 
+     return fd; 
+@@ -41,7 +41,7 @@ int nf_file_unlock(int fd)
+ 
+     ret = flock(fd, LOCK_UN); 
+     close(fd); 
+-    return 0; 
++    return ret;
+ }                           
+ 
+ int n_json_del_element_from_array_by_idx( struct json_object * obj, int idx )
+diff --git a/multicast_kernel/multi_client/tools/multi_config_control/base_config.c b/multicast_kernel/multi_client/tools/multi_config_control/base_config.c
+index db243b1..2ad9fd6 100644
+--- a/multicast_kernel/multi_client/tools/multi_config_control/base_config.c
++++ b/multicast_kernel/multi_client/tools/multi_config_control/base_config.c
+@@ -26,7 +26,7 @@ int nf_file_lock(char * filename)
+     ret = flock(fd, LOCK_EX); 
+     if(ret < 0){
+         close(fd);
+-        return ret; 
++        return ret;
+     }
+ 
+     return fd; 
+@@ -41,7 +41,7 @@ int nf_file_unlock(int fd)
+ 
+     ret = flock(fd, LOCK_UN); 
+     close(fd); 
+-    return 0; 
++    return ret;
+ }                           
+ 
+ int n_json_del_element_from_array_by_idx( struct json_object * obj, int idx )
+diff --git a/multicast_kernel/multi_server/kmod/multis_nf.c b/multicast_kernel/multi_server/kmod/multis_nf.c
+index 656c987..c8d7194 100755
+--- a/multicast_kernel/multi_server/kmod/multis_nf.c
++++ b/multicast_kernel/multi_server/kmod/multis_nf.c
+@@ -6,6 +6,7 @@
+ #include <linux/netfilter_ipv4.h>
+ #include <linux/version.h>
+ #include <linux/module.h>
++#include <linux/netfilter.h>
+ 
+ //#include "tmc_control_pkt.h"
+ #include "tmcc_nl.h"
+@@ -38,11 +39,20 @@ static inline bool ipv4_is_multicast(__be32 addr)
+ #endif
+ 
+ #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
+-unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff **pskb, 
++static unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff **pskb,
+    const struct net_device *in,const struct net_device *out, int (*okfn)(struct sk_buff *))
++#elif  LINUX_VERSION_CODE <= KERNEL_VERSION(4,0,0)
++/* params 1 which is care, may be unsigned int hooknum */
++unsigned int tmcs_hook_local_out(const struct nf_hook_ops *ops, struct sk_buff *skb,
++   const struct net_device *in, const struct net_device *out,
++#ifndef __GENKSYMS__
++   const struct nf_hook_state *state
+ #else
+-unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff *skb, 
+-   const struct net_device *in,const struct net_device *out, int (*okfn)(struct sk_buff *))
++   int (*okfn)(struct sk_buff *)
++#endif
++	)
++#else
++static unsigned int tmcs_hook_local_out(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
+ #endif
+ {
+ #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
+diff --git a/multicast_kernel/multi_server/kmod/multis_nl.c b/multicast_kernel/multi_server/kmod/multis_nl.c
+index af6dad0..06117cc 100755
+--- a/multicast_kernel/multi_server/kmod/multis_nl.c
++++ b/multicast_kernel/multi_server/kmod/multis_nl.c
+@@ -251,15 +251,12 @@ static void tmcc_rcv_sock(struct sock *sk, int len)
+ int multi_nl_init(void)
+ {
+     /*netlink varies greatly in different kernel version, so in fact we only cover 2.6.32 and 3.10 kernel version.*/
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,0,0)
+-    /*
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,10,0)
+     struct netlink_kernel_cfg cfg = {
+         .input  = tmcc_rcv_skb,
+     };
+ 
+     multi_nl_sk = netlink_kernel_create(&init_net, MULTI_NL, &cfg);
+-    */
+-    multi_nl_sk = netlink_kernel_create(&init_net, MULTI_NL, 0, tmcc_rcv_skb, NULL, THIS_MODULE);
+ #elif LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
+     multi_nl_sk = netlink_kernel_create(MULTI_NL, 0, tmcc_rcv_sock, THIS_MODULE);
+ #else
+diff --git a/multicast_kernel/multi_server/tools/multi_config_control/base_config.c b/multicast_kernel/multi_server/tools/multi_config_control/base_config.c
+index db243b1..2ad9fd6 100644
+--- a/multicast_kernel/multi_server/tools/multi_config_control/base_config.c
++++ b/multicast_kernel/multi_server/tools/multi_config_control/base_config.c
+@@ -26,7 +26,7 @@ int nf_file_lock(char * filename)
+     ret = flock(fd, LOCK_EX); 
+     if(ret < 0){
+         close(fd);
+-        return ret; 
++        return ret;
+     }
+ 
+     return fd; 
+@@ -41,7 +41,7 @@ int nf_file_unlock(int fd)
+ 
+     ret = flock(fd, LOCK_UN); 
+     close(fd); 
+-    return 0; 
++    return ret;
+ }                           
+ 
+ int n_json_del_element_from_array_by_idx( struct json_object * obj, int idx )
+diff --git a/multicast_kernel/multi_server/tools/multi_server_control/base_config.c b/multicast_kernel/multi_server/tools/multi_server_control/base_config.c
+index 2c566e1..7474d05 100644
+--- a/multicast_kernel/multi_server/tools/multi_server_control/base_config.c
++++ b/multicast_kernel/multi_server/tools/multi_server_control/base_config.c
+@@ -41,7 +41,7 @@ int nf_file_unlock(int fd)
+ 
+     ret = flock(fd, LOCK_UN); 
+     close(fd); 
+-    return 0; 
++    return ret;
+ }                           
+ 
+ int n_json_del_element_from_array_by_idx( struct json_object * obj, int idx )
