@@ -13,7 +13,7 @@
 static int multi_init(void)
 {
     int ret;
-    
+
     ret = multi_node_init();
     if(ret < 0)
         goto FAIL;
@@ -28,10 +28,10 @@ static int multi_init(void)
 
     printk(KERN_INFO"multi server init success!\n");
     return 0;
-    
+
 MULTI_NL_FAIL:
     multi_nl_fini();
-    
+
 MULTI_NODE_FAIL:
     multi_node_fini();
 

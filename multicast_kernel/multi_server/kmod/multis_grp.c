@@ -15,7 +15,7 @@
 
 struct multi_node multi_grp[MULTI_GRP_BUCKET][MULTI_GRP_DEPTH];
 
-uint32_t multi_vm[MULTI_GRP_MAX][MULTI_VM_MAX]; 
+uint32_t multi_vm[MULTI_GRP_MAX][MULTI_VM_MAX];
 struct multi_stats_st multi_stats[MULTI_GRP_MAX];
 
 unsigned long bitmap;
@@ -83,7 +83,7 @@ struct multi_node *__lookup_multi_node(uint32_t mulit_ip, uint32_t *index,uint32
     uint32_t idx;
     int i;
 
-    idx = mulit_hash_key(mulit_ip, MULTI_GRP_BUCKET); 
+    idx = mulit_hash_key(mulit_ip, MULTI_GRP_BUCKET);
     *index = idx;
 
     for(i = 0; i < MULTI_GRP_DEPTH; i++)
@@ -129,11 +129,11 @@ int lookup_multi_node(uint32_t multi_ip, uint32_t iplist[], struct multi_node *n
 static int add_vm_ip_list(uint8_t idx, uint32_t *ip_list, uint32_t ip_num, uint32_t *old_ip_num)
 {
     int i,j,k;
-    
+
     k = *old_ip_num;
     if(ip_list == NULL || ip_num + (*old_ip_num) > MULTI_VM_MAX)
         return MULTI_PARAM_ERROR;
-    
+
     for(i = 0; i < ip_num; i++)
     {
         for(j = 0; j < *old_ip_num; j++)
@@ -153,7 +153,7 @@ static int add_vm_ip_list(uint8_t idx, uint32_t *ip_list, uint32_t ip_num, uint3
             k++;
         }
     }
-    
+
     *old_ip_num = k;
     return 0;
 }
@@ -163,10 +163,10 @@ static int add_vm_ip_list(uint8_t idx, uint32_t *ip_list, uint32_t ip_num, uint3
 int get_vm_ip_list(uint8_t idx, uint32_t *ip_list, uint8_t ip_num)
 {
     int i;
-    
+
     if(ip_list == NULL)
         return MULTI_PARAM_ERROR;
-    
+
     for(i = 0; i < ip_num; i++)
     {
         ip_list[i] = multi_vm[idx][i];
@@ -200,7 +200,7 @@ int append_vm_ip_list(uint32_t multi_ip,uint32_t *ip_list, uint8_t ip_num)
     {
         ret = MULTI_NODE_NOT_EXSIT;
         goto FINISH;
-    } 
+    }
 
     idx = node->multi_grp_idx;
     ret = add_vm_ip_list(idx, ip_list, ip_num, &(node->multi_member_cnt));
@@ -230,7 +230,7 @@ int get_all_multi_grp(struct tmcc_nl_show_service_st  *k_service)
         }
     }
     k_service->ip_num = k;
-     
+
     return 0;
 }
 
@@ -249,21 +249,21 @@ int list_multi_node_and_vm_ip(uint32_t multi_ip, struct tmcc_nl_show_service_st 
     {
         ret = MULTI_NODE_NOT_EXSIT;
         goto FINISH;
-    } 
-    
+    }
+
     idx = node->multi_grp_idx;
     get_vm_ip->ip_num = node->multi_member_cnt;
     get_vm_ip->multi_ip = node->multi_ip;
 
 //    printk(KERN_ERR "idx %u ip_num %u multi_ip %04x\n",idx, get_vm_ip->ip_num, get_vm_ip->multi_ip);
-    
+
     ret = get_vm_ip_list(idx, get_vm_ip->ip_list, node->multi_member_cnt);
     if(ret)
     {
         ret = MULTI_PARAM_ERROR;
         goto FINISH;
     }
-    
+
 FINISH:
     spin_unlock_bh(&multi_lock);
     return ret;
@@ -306,12 +306,12 @@ int vm_quit_from_multi_grp(uint32_t multi_ip,uint32_t *ip_list, uint8_t ip_num)
         ret = MULTI_NODE_NOT_EXSIT;
         goto FINISH;
     }
-    
+
     del_quit_vm_ip(node->multi_grp_idx, ip_list, ip_num, &(node->multi_member_cnt));
 
 FINISH:
     spin_unlock_bh(&multi_lock);
-    
+
     return ret;
 }
 
@@ -346,7 +346,7 @@ int add_multi_node(uint32_t multi_ip,uint32_t *ip_list, uint8_t ip_num)
         goto FINISH;
     }
 
-    
+
     for(i = 0; i < MULTI_GRP_DEPTH; i++)
     {
         node = &multi_grp[index][i];
@@ -364,7 +364,7 @@ int add_multi_node(uint32_t multi_ip,uint32_t *ip_list, uint8_t ip_num)
             {
                 ret = MULTI_PARAM_ERROR;
             }
-            goto FINISH;   
+            goto FINISH;
         }
     }
 
@@ -384,7 +384,7 @@ int del_multi_node(uint32_t multi_ip)
     uint8_t idx;
     int j;
     struct multi_node *node_del = NULL;
-    struct multi_node *node_move = NULL;    
+    struct multi_node *node_move = NULL;
     int ret = 0;
 
     spin_lock_bh(&multi_lock);
@@ -498,7 +498,7 @@ int multi_node_init(void)
 
     memset(multi_grp, 0, sizeof(struct multi_node) * MULTI_GRP_BUCKET * MULTI_GRP_DEPTH);
 
-    memset(multi_vm, 0, sizeof(uint32_t) * MULTI_GRP_MAX * MULTI_VM_MAX); 
+    memset(multi_vm, 0, sizeof(uint32_t) * MULTI_GRP_MAX * MULTI_VM_MAX);
     memset(multi_stats, 0, sizeof(struct multi_stats_st) * MULTI_GRP_MAX);
 
     bitmap = 0;

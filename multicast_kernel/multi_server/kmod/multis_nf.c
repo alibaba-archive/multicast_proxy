@@ -22,11 +22,11 @@ static uint64_t tx_bytes = 0;
 void get_all_multi_drop_pkt_stats(struct multi_server_drop_stats *k_stats)
 {
     k_stats->no_multi_grp_pkt_drop_count = no_multi_grp_pkt_drop_count;
-    k_stats->no_multi_member_pkt_drop_count = no_vm_ip_list_pkt_drop_count;  
+    k_stats->no_multi_member_pkt_drop_count = no_vm_ip_list_pkt_drop_count;
     k_stats->route_fail_drop_count = route_fail_drop_count;
     k_stats->no_mem_drop_count = no_mem_drop_count;
-    k_stats->tx_packets = tx_packets;  
-    k_stats->tx_bytes = tx_bytes; 
+    k_stats->tx_packets = tx_packets;
+    k_stats->tx_bytes = tx_bytes;
     return;
 }
 
@@ -38,10 +38,10 @@ static inline bool ipv4_is_multicast(__be32 addr)
 #endif
 
 #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
-unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff **pskb, 
+unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff **pskb,
    const struct net_device *in,const struct net_device *out, int (*okfn)(struct sk_buff *))
 #else
-unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff *skb, 
+unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff *skb,
    const struct net_device *in,const struct net_device *out, int (*okfn)(struct sk_buff *))
 #endif
 {
@@ -58,7 +58,7 @@ unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff *skb,
 	uint32_t daddr = htonl(iph->daddr);
     uint8_t protocol = iph->protocol;
     uint32_t old_addr;
-   
+
     if(protocol != IPPROTO_UDP)
         return NF_ACCEPT;
 
@@ -81,7 +81,7 @@ unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff *skb,
         no_vm_ip_list_pkt_drop_count++;
         return NF_ACCEPT;
     }
-     
+
    // printk(KERN_ERR "%d\n", node->multi_member_cnt);
     for(i = 0; i < node.multi_member_cnt; i++)
     {
@@ -91,7 +91,7 @@ unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff *skb,
             no_mem_drop_count++;
             continue;
         }
-        
+
 //        printk(KERN_ERR "vm_ip %04x\n",vm_ip_list[i]);
         iph = ip_hdr(new_skb);
 	    //iph->ttl = 64;  //need ?
@@ -101,7 +101,7 @@ unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff *skb,
 
 		if(iph->ttl < 64)
 			iph->ttl = 64;
-        
+
         old_addr = iph->daddr;
         iph->daddr = htonl(vm_ip_list[i]);
         /*
@@ -131,7 +131,7 @@ unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff *skb,
             route_fail_drop_count++;
             continue;
         }
-	
+
 #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
         skb->dst->output(new_skb);
 #else
@@ -141,9 +141,9 @@ unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff *skb,
         //statistic
         tx_packets++;
         tx_bytes += ntohs(iph->tot_len);
-        multi_grp_stats(node.multi_grp_idx, ntohs(iph->tot_len)); 
+        multi_grp_stats(node.multi_grp_idx, ntohs(iph->tot_len));
     }
-    
+
     return NF_ACCEPT;
 }
 

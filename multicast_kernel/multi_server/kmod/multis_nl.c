@@ -146,7 +146,7 @@ int multi_nl_node_get_drop_stats(struct tmcc_msg_st *msg_st)
     {
         return -1;
     }
-    
+
     return 0;
 }
 
@@ -157,7 +157,7 @@ int multi_nl_vm_list_append(struct tmcc_msg_st *msg_st)
     int ret;
 
     service = (struct tmcc_nl_service_st *)msg_st->data;
-    ret = append_vm_ip_list(service->multi_ip,service->ip_list,service->ip_num); 
+    ret = append_vm_ip_list(service->multi_ip,service->ip_list,service->ip_num);
     if(ret)
     {
         service->ret = ret;
@@ -187,7 +187,7 @@ void tmcc_rcv_skb(struct sk_buff *skb)
     nlmsglen = nlh->nlmsg_len;
     if (nlmsglen < sizeof(*nlh) || skblen < nlmsglen){
         return;
-    }	
+    }
 
     pid = nlh->nlmsg_pid;
     flags = nlh->nlmsg_flags;
@@ -199,7 +199,7 @@ void tmcc_rcv_skb(struct sk_buff *skb)
     type = nlh->nlmsg_type;
 
     msg_st = (struct tmcc_msg_st *)nlh;
-	
+
     switch(type){
         case TMCC_SERVICE_ADD:
             ret = multi_nl_node_add(msg_st);
@@ -230,7 +230,7 @@ void tmcc_rcv_skb(struct sk_buff *skb)
     return;
 }
 
-#if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18) 
+#if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
 static DEFINE_MUTEX(rx_queue_mutex);
 
 static void tmcc_rcv_sock(struct sock *sk, int len)
@@ -243,7 +243,7 @@ static void tmcc_rcv_sock(struct sock *sk, int len)
         tmcc_rcv_skb(skb);
         kfree_skb(skb);
     }
-    
+
     mutex_unlock(&rx_queue_mutex);
 }
 #endif
@@ -268,7 +268,7 @@ int multi_nl_init(void)
     if(multi_nl_sk == NULL){
         printk(KERN_ERR "tmcc_rcv_skb: failed to create netlink socket\n");
         return -1;
-    }       
+    }
 
     return 0;
 }
