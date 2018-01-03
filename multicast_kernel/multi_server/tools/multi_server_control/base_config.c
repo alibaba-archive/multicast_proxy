@@ -41,7 +41,7 @@ int nf_file_unlock(int fd)
 
     ret = flock(fd, LOCK_UN); 
     close(fd); 
-    return 0; 
+    return ret; 
 }                           
 
 int n_json_del_element_from_array_by_idx( struct json_object * obj, int idx )

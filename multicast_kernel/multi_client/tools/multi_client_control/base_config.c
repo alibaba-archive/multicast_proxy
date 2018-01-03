@@ -23,10 +23,10 @@ int nf_file_lock(char * filename)
     if(fd < 0)
         return fd;
 
-    ret = flock(fd, LOCK_EX); 
+    ret = flock(fd, LOCK_EX);
     if(ret < 0){
         close(fd);
-        return ret; 
+        return ret;
     }
 
     return fd; 
@@ -39,9 +39,9 @@ int nf_file_unlock(int fd)
     if(fd < 0)
         return fd;
 
-    ret = flock(fd, LOCK_UN); 
-    close(fd); 
-    return 0; 
+    ret = flock(fd, LOCK_UN);
+    close(fd);
+    return ret;
 }                           
 
 int n_json_del_element_from_array_by_idx( struct json_object * obj, int idx )

@@ -3,6 +3,7 @@
 #include <net/tcp.h>
 #include <linux/udp.h>
 #include <linux/tcp.h>
+#include <linux/netfilter.h>
 #include <linux/netfilter_ipv4.h>
 #include <linux/version.h>
 #include <linux/module.h>
@@ -21,13 +22,32 @@ void get_all_multi_packets_stats(struct multic_packets_stats_st *stats)
 }
 
 #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
-unsigned int tmcc_hook_local_in(unsigned int hook, struct sk_buff **pskb, 
-   const struct net_device *in,const struct net_device *out, int (*okfn)(struct sk_buff *))
+
+unsigned int tmcc_hook_local_in(unsigned int hook,
+        struct sk_buff **pskb,
+        const struct net_device *in,
+        const struct net_device *out,
+        int (*okfn)(struct sk_buff *))
+#elif LINUX_VERSION_CODE <= KERNEL_VERSION(4,0,0)
+
+unsigned int tmcc_hook_local_in(const struct nf_hook_ops *ops,
+        struct sk_buff *skb,
+        const struct net_device *in,
+        const struct net_device *out,
+    #ifndef __GENKSYMS__
+        const struct nf_hook_state *state
+    #else
+        int (*okfn)(struct sk_buff *)
+    #endif
+        )
 #else
-unsigned int tmcc_hook_local_in(unsigned int hook, struct sk_buff *skb, 
-   const struct net_device *in,const struct net_device *out, int (*okfn)(struct sk_buff *))
+
+static unsigned int tmcc_hook_local_in(const struct nf_hook_ops *ops,
+        struct sk_buff *skb,
+        const struct nf_hook_state *state)
 #endif
 {
+
 #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
     struct sk_buff *skb = *pskb;
 #endif
@@ -94,12 +114,15 @@ static struct nf_hook_ops multi_ops[] __read_mostly = {
     {
         .hook           = tmcc_hook_local_in,
         .owner          = THIS_MODULE,
-        .pf             = PF_INET,
+
 #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
+        .pf             = PF_INET,
         .hooknum        = NF_IP_PRE_ROUTING,
 #else
+        .pf             = NFPROTO_IPV4,
         .hooknum        = NF_INET_PRE_ROUTING,
 #endif
+
         .priority       = NF_IP_PRI_FIRST,
     }
 };

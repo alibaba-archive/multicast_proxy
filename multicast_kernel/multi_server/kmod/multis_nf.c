@@ -38,11 +38,29 @@ static inline bool ipv4_is_multicast(__be32 addr)
 #endif
 
 #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
-unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff **pskb,
-   const struct net_device *in,const struct net_device *out, int (*okfn)(struct sk_buff *))
+
+unsigned int tmcs_hook_local_out(unsigned int hook,
+        struct sk_buff **pskb,
+        const struct net_device *in,
+        const struct net_device *out,
+        int (*okfn)(struct sk_buff *))
+#elif LINUX_VERSION_CODE <= KERNEL_VERSION(4,0,0)
+
+unsigned int tmcs_hook_local_out(const struct nf_hook_ops *ops,
+        struct sk_buff *skb,
+        const struct net_device *in,
+        const struct net_device *out,
+    #ifndef __GENKSYMS__
+        const struct nf_hook_state *state
+    #else
+        int (*okfn)(struct sk_buff *)
+    #endif
+        )
 #else
-unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff *skb,
-   const struct net_device *in,const struct net_device *out, int (*okfn)(struct sk_buff *))
+
+unsigned int tmcs_hook_local_out(const struct nf_hook_ops *ops,
+        struct sk_buff *skb,
+        const struct nf_hook_state *state)
 #endif
 {
 #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
@@ -65,7 +83,7 @@ unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff *skb,
     if(!ipv4_is_multicast(iph->daddr))
         return NF_ACCEPT;
 
-  //  printk(KERN_ERR "Got a multicast packet, %04x!",daddr);
+    //printk(KERN_ERR "Got a multicast packet, %04x!",daddr);
 
     ret = lookup_multi_node(daddr, vm_ip_list, &node);
     if(ret != 0)
@@ -82,7 +100,7 @@ unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff *skb,
         return NF_ACCEPT;
     }
 
-   // printk(KERN_ERR "%d\n", node->multi_member_cnt);
+    // printk(KERN_ERR "%d\n", node->multi_member_cnt);
     for(i = 0; i < node.multi_member_cnt; i++)
     {
         new_skb = skb_copy(skb, GFP_ATOMIC);
@@ -92,7 +110,7 @@ unsigned int tmcs_hook_local_out(unsigned int hook, struct sk_buff *skb,
             continue;
         }
 
-//        printk(KERN_ERR "vm_ip %04x\n",vm_ip_list[i]);
+        //printk(KERN_ERR "vm_ip %04x\n",vm_ip_list[i]);
         iph = ip_hdr(new_skb);
 	    //iph->ttl = 64;  //need ?
 	    uh = skb_header_pointer(new_skb, ip_hdrlen(new_skb), sizeof(struct udphdr), &uth);
@@ -151,10 +169,11 @@ static struct nf_hook_ops multi_ops[] __read_mostly = {
     {
         .hook           = tmcs_hook_local_out,
         .owner          = THIS_MODULE,
-        .pf             = PF_INET,
 #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
+        .pf             = PF_INET,
         .hooknum        = NF_IP_LOCAL_OUT,
 #else
+        .pf             = NFPROTO_IPV4,
         .hooknum        = NF_INET_LOCAL_OUT,
 #endif
         .priority       = NF_IP_PRI_FIRST,

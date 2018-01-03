@@ -193,16 +193,13 @@ static void tmcc_rcv_sock(struct sock *sk, int len)
 int multi_nl_init(void)
 {
     /*netlink varies greatly in different kernel version, so in fact we only cover 2.6.32 and 3.10 kernel version.*/
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,0,0) 
-    /*
-    struct netlink_kernel_cfg cfg = { 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,10,0)
+    struct netlink_kernel_cfg cfg = {
         .input  = tmcc_rcv_skb,
-    };  
+    };
 
     multi_nl_sk = netlink_kernel_create(&init_net, MULTI_NL, &cfg);
-    */
-    multi_nl_sk = netlink_kernel_create(&init_net, MULTI_NL, 0, tmcc_rcv_skb, NULL, THIS_MODULE);
-#elif LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18) 
+#elif LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
     multi_nl_sk = netlink_kernel_create(MULTI_NL, 0, tmcc_rcv_sock, THIS_MODULE);
 #else
     multi_nl_sk = netlink_kernel_create(&init_net, MULTI_NL, 0, tmcc_rcv_skb, NULL, THIS_MODULE);
