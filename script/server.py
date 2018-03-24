@@ -22,10 +22,10 @@ def main(multi_ip, multi_port, eth_ip):
 if __name__ == '__main__':
     if len(sys.argv) == 4:
         multi_ip = sys.argv[1]
-        multi_port = sys.argv[2]
+        multi_port = int(sys.argv[2])
         eth_ip = sys.argv[3]
     else:
-        print 'Usage: python %s multi_ip multi_port eth_ip. Now default conf is used.'
+        print 'Usage: python %s multi_ip multi_port eth_ip. Now default conf is used.' %sys.argv[0]
 
     main(multi_ip, multi_port, eth_ip)
 

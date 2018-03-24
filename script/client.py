@@ -9,7 +9,7 @@ multi_port = 65535
 if __name__ == '__main__':
     if len(sys.argv) == 3:
         multi_ip = sys.argv[1]
-        multi_port = sys.argv[2]
+        multi_port = int(sys.argv[2])
     else:
         print 'Usage: python %s multi_ip multi_port. Now default conf is used.' % sys.argv[0]
 
