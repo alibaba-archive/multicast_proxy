@@ -5,8 +5,7 @@ C_FLAGS += -g $(INCLUDE)
 EXTRA_CFLAGS += $(C_FLAGS)
 TMCC_MODULE=multi_server
 
-$(TMCC_MODULE)-objs := multis.o multis_nl.o multis_nf.o \
-                    multis_grp.o 
+$(TMCC_MODULE)-objs := multis.o multis_nl.o multis_nf.o multis_grp.o
 obj-m := $(TMCC_MODULE).o
 
 default:
