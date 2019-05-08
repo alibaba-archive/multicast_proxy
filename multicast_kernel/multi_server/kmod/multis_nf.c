@@ -56,11 +56,16 @@ unsigned int tmcs_hook_local_out(const struct nf_hook_ops *ops,
         int (*okfn)(struct sk_buff *)
     #endif
         )
-#else
+#elif LINUX_VERSION_CODE <= KERNEL_VERSION(4,2,0)
 
 unsigned int tmcs_hook_local_out(const struct nf_hook_ops *ops,
         struct sk_buff *skb,
         const struct nf_hook_state *state)
+#else
+static unsigned int tmcs_hook_local_out(void *priv,
+        struct sk_buff *skb,
+        const struct nf_hook_state *state)
+
 #endif
 {
 #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
@@ -142,8 +147,10 @@ unsigned int tmcs_hook_local_out(const struct nf_hook_ops *ops,
         //reroute because of dnat
 #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
         if(ip_route_me_harder(&new_skb) != 0){
-#else
+#elif LINUX_VERSION_CODE <= KERNEL_VERSION(4,2,0)
         if(ip_route_me_harder(new_skb, RTN_UNSPEC) != 0){
+#else
+        if(ip_route_me_harder(state->net, new_skb, RTN_UNSPEC) != 0){
 #endif
             kfree_skb(new_skb);
             route_fail_drop_count++;
@@ -152,8 +159,10 @@ unsigned int tmcs_hook_local_out(const struct nf_hook_ops *ops,
 
 #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
         skb->dst->output(new_skb);
-#else
+#elif LINUX_VERSION_CODE <= KERNEL_VERSION(4,2,0)
         ip_local_out(new_skb);
+#else
+        ip_local_out(dev_net(skb_dst(skb)->dev), new_skb->sk, new_skb);
 #endif
 
         //statistic
@@ -168,10 +177,14 @@ unsigned int tmcs_hook_local_out(const struct nf_hook_ops *ops,
 static struct nf_hook_ops multi_ops[] __read_mostly = {
     {
         .hook           = tmcs_hook_local_out,
-        .owner          = THIS_MODULE,
 #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
+        .owner          = THIS_MODULE,
         .pf             = PF_INET,
         .hooknum        = NF_IP_LOCAL_OUT,
+#elif LINUX_VERSION_CODE <= KERNEL_VERSION(4,2,0)
+        .owner          = THIS_MODULE,
+        .pf             = NFPROTO_IPV4,
+        .hooknum        = NF_INET_LOCAL_OUT,
 #else
         .pf             = NFPROTO_IPV4,
         .hooknum        = NF_INET_LOCAL_OUT,

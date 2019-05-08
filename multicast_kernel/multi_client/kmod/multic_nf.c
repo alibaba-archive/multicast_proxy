@@ -40,9 +40,14 @@ unsigned int tmcc_hook_local_in(const struct nf_hook_ops *ops,
         int (*okfn)(struct sk_buff *)
     #endif
         )
-#else
+#elif LINUX_VERSION_CODE <= KERNEL_VERSION(4,2,0)
 
 static unsigned int tmcc_hook_local_in(const struct nf_hook_ops *ops,
+        struct sk_buff *skb,
+        const struct nf_hook_state *state)
+#else
+
+static unsigned int tmcc_hook_local_in(void *priv,
         struct sk_buff *skb,
         const struct nf_hook_state *state)
 #endif
@@ -113,11 +118,15 @@ static unsigned int tmcc_hook_local_in(const struct nf_hook_ops *ops,
 static struct nf_hook_ops multi_ops[] __read_mostly = {
     {
         .hook           = tmcc_hook_local_in,
-        .owner          = THIS_MODULE,
 
 #if  LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,18)
+        .owner          = THIS_MODULE,
         .pf             = PF_INET,
         .hooknum        = NF_IP_PRE_ROUTING,
+#elif LINUX_VERSION_CODE <= KERNEL_VERSION(4,2,0)
+        .owner          = THIS_MODULE,
+        .pf             = NFPROTO_IPV4,
+        .hooknum        = NF_INET_PRE_ROUTING,
 #else
         .pf             = NFPROTO_IPV4,
         .hooknum        = NF_INET_PRE_ROUTING,

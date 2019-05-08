@@ -113,10 +113,10 @@ int tmcc_service_list(struct tmcc_nl_service_st *serv, uint32_t datalen)
     message = (struct tmcc_msg_st *)malloc(msg_len);
     if(message == NULL)
     {
-	 fprintf(stderr, "mem allocate failure!\n");
-     free(service);
-	 close(skfd);
-	 return -1;
+        fprintf(stderr, "mem allocate failure!\n");
+        free(service);
+        close(skfd);
+        return -1;
     }
 
 	//printf("multi_ip is %04x\n",serv->multi_ip);
@@ -131,7 +131,6 @@ int tmcc_service_list(struct tmcc_nl_service_st *serv, uint32_t datalen)
     
     tmcc_comm_kernel_finish();
 	
-    service = (struct tmcc_nl_show_service_st *)message->reply_ptr;
     print_vm_ip_info(service);
     free(service);
     free(message);
@@ -225,6 +224,7 @@ int tmcc_service_show(struct tmcc_nl_service_st *serv, uint32_t datalen)
 		close(skfd);
 		return -1;
     }
+	service->ip_num = 0;
 
     msg_len = NLMSG_LENGTH(sizeof(void *));
     message = (struct tmcc_msg_st *)malloc(msg_len);
@@ -244,7 +244,6 @@ int tmcc_service_show(struct tmcc_nl_service_st *serv, uint32_t datalen)
     
 	tmcc_comm_kernel_finish();
 	
-	service = (struct tmcc_nl_show_service_st *)message->reply_ptr;
     print_multi_grp_ip(service);
     free(message);
     free(service);

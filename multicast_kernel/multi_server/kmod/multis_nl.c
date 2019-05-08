@@ -23,7 +23,7 @@ int multi_nl_node_add(struct tmcc_msg_st *msg_st)
     /* let vm join into multicast group */
     if(service->action == MULTI_OPT_JOIN)
     {
-        ret = add_multi_node(service->multi_ip,service->ip_list, service->ip_num);
+        ret = add_multi_node(service->multi_ip, service->ip_list, service->ip_num);
         if(ret)
         {
             service->ret = ret;
@@ -69,35 +69,24 @@ int multi_nl_node_clear(struct tmcc_msg_st *msg_st)
 static struct tmcc_nl_show_service_st  k_service;
 int multi_nl_vm_list_get(struct tmcc_msg_st *msg_st)
 {
+    int ret;
     struct tmcc_nl_show_service_st __user *u_service;
     struct tmcc_nl_service_st  *service_in_kernel;
-    int ret;
 
     service_in_kernel = (struct tmcc_nl_service_st *)msg_st->data;
-
     u_service = (struct tmcc_nl_show_service_st __user *)msg_st->reply_ptr;
 
     k_service.ip_num = 0;
 
-    //printk(KERN_ERR "multi_ip %04x\n",service_in_kernel->multi_ip);
-
-    ret = list_multi_node_and_vm_ip(service_in_kernel->multi_ip,&k_service);
-	//printk(KERN_ERR "get result %d\n",ret);
-    if(ret)
-    {
-        u_service->ret = ret;
-        return ret;
-    }
-
+    ret = list_multi_node_and_vm_ip(service_in_kernel->multi_ip, &k_service);
+    k_service.ret = ret;
 
     if(copy_to_user(u_service, &k_service, sizeof(struct tmcc_nl_show_service_st)))
     {
         return -1;
     }
 
-	u_service->ret = 0;
-    return 0;
-
+    return ret;
 }
 
 int multi_nl_grp_show(struct tmcc_msg_st *msg_st)
@@ -110,19 +99,14 @@ int multi_nl_grp_show(struct tmcc_msg_st *msg_st)
     k_service.ip_num = 0;
 
     ret = get_all_multi_grp(&k_service);
-    if(ret)
-    {
-        u_service->ret = ret;
-        return -1;
-    }
+    k_service.ret = ret;
 
     if(copy_to_user(u_service, &k_service, sizeof(struct tmcc_nl_show_service_st)))
     {
         return -1;
     }
 
-	u_service->ret = 0;
-    return 0;
+    return ret;
 
 }
 

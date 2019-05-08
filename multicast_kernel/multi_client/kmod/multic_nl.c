@@ -33,29 +33,14 @@ int multi_nl_node_add(struct tmcc_msg_st *msg_st)
 int multi_nl_node_delete(struct tmcc_msg_st *msg_st)
 {
     struct tmcc_nl_service_st *service;
-    int ret;
 
     service = (struct tmcc_nl_service_st *)msg_st->data;
-    ret = del_multi_node(service->server_ip, service->port);
-    if(ret)
-    {
-        return ret;
-    }
-
-    return 0;
+    return del_multi_node(service->server_ip, service->port);
 }
 
 int multi_nl_node_clear(struct tmcc_msg_st *msg_st)
 {
-    int ret;
-
-    ret = clear_multi_node();
-    if(ret)
-    {
-        return ret;
-    }
-
-    return 0;
+    return clear_multi_node();
 }
 
 static struct tmcc_nl_show_service_st  k_service;
@@ -71,25 +56,15 @@ int multi_nl_vm_list_get(struct tmcc_msg_st *msg_st)
 
     k_service.node_cnt = 0;
 
-    //printk(KERN_ERR "multi_ip %04x\n",service_in_kernel->multi_ip);
-
     ret = list_all_multi_grp(&k_service);
-    //printk(KERN_ERR "get result %d\n",ret);
-    if(ret)
-    {
-        u_service->ret = ret;
-        return ret;
-    }
-
+    k_service.ret = ret;
 
     if(copy_to_user(u_service, &k_service, sizeof(struct tmcc_nl_show_service_st)))
     {
         return -1;
     }
 
-    u_service->ret = 0;
-    return 0;
-
+    return ret;
 }
 
 int multi_nl_node_packets_stats(struct tmcc_msg_st *msg_st)

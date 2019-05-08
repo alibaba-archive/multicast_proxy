@@ -26,7 +26,7 @@ static int multi_init(void)
     if(ret < 0)
         goto MULTI_NL_FAIL;
 
-    printk(KERN_INFO"multi server init success!\n");
+    printk(KERN_INFO"multi client init success!\n");
     return 0;
     
 MULTI_NL_FAIL:
