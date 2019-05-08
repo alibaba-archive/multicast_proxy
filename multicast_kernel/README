@@ -4,7 +4,7 @@
 tips:
    make sure the rpm of kernel-devel has been installed in the linux.
 
-feaure:
+feature:
    if you want to support broadcast, support_broadcast.patch is needed.
    1. cd multicast_proxy; patch -p1 < multicast_kernel/patch/support_broadcast.patch
 
