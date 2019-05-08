@@ -1,5 +1,26 @@
+diff --git a/multicast_kernel/multi_client/tools/multi_client_control/app_control.c b/multicast_kernel/multi_client/tools/multi_client_control/app_control.c
+index 55cb545..fa82208 100644
+--- a/multicast_kernel/multi_client/tools/multi_client_control/app_control.c
++++ b/multicast_kernel/multi_client/tools/multi_client_control/app_control.c
+@@ -199,10 +199,12 @@ int main(int argc, char **argv)
+ 					printf("error: ip %s is invalid!\n\n", optarg);
+ 					return -1;
+ 				}
+-				if(!((multi_ip >= 0xE0000000) && (multi_ip <= 0xEFFFFFFF))){
+-					printf("error: ip %s is not a multicast ip!\n\n", optarg);
+-					return -1;
+-				}
++#if 0
++                if(!((multi_ip >= 0xE0000000) && (multi_ip <= 0xEFFFFFFF))){
++                    printf("error: ip %s is not a multicast ip!\n\n", optarg);
++                    return -1;
++                }
++#endif
+ 				service.multi_ip = multi_ip;
+ 				break;
+ 			case 'i':
 diff --git a/multicast_kernel/multi_server/kmod/multis_nf.c b/multicast_kernel/multi_server/kmod/multis_nf.c
-index d582526..dc6ab03 100755
+index d582526..fb1d095 100755
 --- a/multicast_kernel/multi_server/kmod/multis_nf.c
 +++ b/multicast_kernel/multi_server/kmod/multis_nf.c
 @@ -85,8 +85,8 @@ static unsigned int tmcs_hook_local_out(void *priv,
@@ -13,3 +34,29 @@ index d582526..dc6ab03 100755
  
      //printk(KERN_ERR "Got a multicast packet, %04x!",daddr);
  
+@@ -97,7 +97,7 @@ static unsigned int tmcs_hook_local_out(void *priv,
+         return NF_ACCEPT;
+     }
+ 
+-	//printk(KERN_ERR "Get a node, vm counter is %d",node->multi_member_cnt);
++    //printk(KERN_ERR "Get a node, vm counter is %d",node->multi_member_cnt);
+ 
+     if(node.multi_member_cnt == 0)
+     {
+diff --git a/multicast_kernel/multi_server/tools/multi_server_control/app_control.c b/multicast_kernel/multi_server/tools/multi_server_control/app_control.c
+index d8fc308..50c9b7c 100755
+--- a/multicast_kernel/multi_server/tools/multi_server_control/app_control.c
++++ b/multicast_kernel/multi_server/tools/multi_server_control/app_control.c
+@@ -186,10 +186,12 @@ int main(int argc, char **argv)
+                     printf("error: ip %s is invalid!\n\n", optarg);
+                     return -1;
+                 }
++#if 0
+                 if(!((multi_ip >= 0xE0000000) && (multi_ip <= 0xEFFFFFFF))){
+                     printf("error: ip %s is not a multicast ip!\n\n", optarg);
+                     return -1;
+                 }
++#endif
+                 service.multi_ip = multi_ip;
+                 break;
+             case 'j':
