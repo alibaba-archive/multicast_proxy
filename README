@@ -1,8 +1,8 @@
 文件夹说明
 
+multicast_kernel: 是linux下多播代理程序内核版本。
 multicast_win: 是windows下多播代理程序。
 multicast_linux: 是linux下多播代理程序。
-multicast_kernel: 是linux下多播代理程序内核版本。
 
 Suggest:
     1. 如果出现用户态组播工具占用CPU过高的情况，建议使用内核版本。

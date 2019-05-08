@@ -1,0 +1,15 @@
+diff --git a/multicast_kernel/multi_server/kmod/multis_nf.c b/multicast_kernel/multi_server/kmod/multis_nf.c
+index d582526..dc6ab03 100755
+--- a/multicast_kernel/multi_server/kmod/multis_nf.c
++++ b/multicast_kernel/multi_server/kmod/multis_nf.c
+@@ -85,8 +85,8 @@ static unsigned int tmcs_hook_local_out(void *priv,
+     if(protocol != IPPROTO_UDP)
+         return NF_ACCEPT;
+ 
+-    if(!ipv4_is_multicast(iph->daddr))
+-        return NF_ACCEPT;
++    //if(!ipv4_is_multicast(iph->daddr))
++    //    return NF_ACCEPT;
+ 
+     //printk(KERN_ERR "Got a multicast packet, %04x!",daddr);
+ 
