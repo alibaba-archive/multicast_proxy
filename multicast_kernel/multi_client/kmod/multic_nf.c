@@ -83,7 +83,10 @@ static unsigned int tmcc_hook_local_in(void *priv,
     ret = lookup_ip_port_node(saddr, port, &multi_ip, &bucket, &depth);
     if(ret != 0)
     {
-        return NF_ACCEPT;
+        ret = lookup_ip_port_node(saddr, 0, &multi_ip, &bucket, &depth);
+        if(ret != 0) {
+            return NF_ACCEPT;
+        }
     }
 
     old_addr = iph->daddr;
