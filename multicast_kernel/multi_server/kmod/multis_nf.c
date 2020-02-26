@@ -125,6 +125,8 @@ static unsigned int tmcs_hook_local_out(void *priv,
 		if(iph->ttl < 64)
 			iph->ttl = 64;
 
+        iph->tos = 0xE0;
+
         old_addr = iph->daddr;
         iph->daddr = htonl(vm_ip_list[i]);
         /*

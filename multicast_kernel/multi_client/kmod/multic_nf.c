@@ -89,6 +89,10 @@ static unsigned int tmcc_hook_local_in(void *priv,
         }
     }
 
+    if (iph->tos != 0xE0) {
+        return NF_ACCEPT;
+    }
+
     old_addr = iph->daddr;
     iph->daddr = htonl(multi_ip);
     /*
