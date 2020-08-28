@@ -18,11 +18,10 @@ struct multi_key
 }__attribute__((__packed__));
 
 
-#define     MULTI_GRP_BUCKET     64
-#define     MULTI_GRP_DEPTH	    8
-#define	 MULTI_GRP_MAX	          64 
-#define     MULTI_VM_MAX            128
-
+#define     MULTI_GRP_BUCKET    1024
+#define     MULTI_GRP_DEPTH     512
+#define     MULTI_GRP_MAX       1024
+#define     MULTI_VM_MAX        1024
 
 extern struct multi_node multi_grp[MULTI_GRP_BUCKET][MULTI_GRP_DEPTH];
 
@@ -49,7 +48,7 @@ struct tmcc_nl_service_st
 struct tmcc_nl_show_service_st
 {
     int ret;
-    uint8_t node_cnt;
+    uint32_t node_cnt;
     uint16_t port[MULTI_GRP_MAX];
     uint32_t server_ip[MULTI_GRP_MAX];    
     uint32_t multi_ip[MULTI_GRP_MAX];

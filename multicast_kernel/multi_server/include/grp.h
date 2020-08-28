@@ -16,10 +16,10 @@ struct multi_key
 }__attribute__((__packed__));
 
 
-#define     MULTI_GRP_BUCKET     64
-#define     MULTI_GRP_DEPTH	    8
-#define	 MULTI_GRP_MAX	            64 
-#define     MULTI_VM_MAX            128
+#define     MULTI_GRP_BUCKET    1024
+#define     MULTI_GRP_DEPTH     512
+#define     MULTI_GRP_MAX       1024
+#define     MULTI_VM_MAX        1024
 
 
 extern struct multi_node multi_grp[MULTI_GRP_BUCKET][MULTI_GRP_DEPTH];
@@ -82,14 +82,14 @@ enum
 extern int multi_node_init(void);
 extern void multi_node_fini(void);
 extern int lookup_multi_node(uint32_t mulit_ip, uint32_t iplist[], struct multi_node *node);
-extern int add_multi_node(uint32_t multi_ip,uint32_t *ip_list, uint8_t ip_num);
-extern int delete_vm_from_multi_grp(uint32_t multi_ip,uint32_t *ip_list, uint8_t ip_num);
-extern int append_vm_ip_list(uint32_t multi_ip,uint32_t *ip_list, uint8_t ip_num);
+extern int add_multi_node(uint32_t multi_ip,uint32_t *ip_list, uint32_t ip_num);
+extern int delete_vm_from_multi_grp(uint32_t multi_ip,uint32_t *ip_list, uint32_t ip_num);
+extern int append_vm_ip_list(uint32_t multi_ip,uint32_t *ip_list, uint32_t ip_num);
 extern int del_multi_node(uint32_t multi_ip);
-extern int get_vm_ip_list(uint8_t idx, uint32_t *ip_list, uint8_t ip_num);
+extern int get_vm_ip_list(uint8_t idx, uint32_t *ip_list, uint32_t ip_num);
 extern int get_multi_node_ip_list(uint32_t multi_ip, struct tmcc_nl_show_service_st *get_vm_ip);
 extern int get_all_multi_grp(struct tmcc_nl_show_service_st  *k_service);
-extern int vm_quit_from_multi_grp(uint32_t multi_ip,uint32_t *ip_list, uint8_t ip_num);
+extern int vm_quit_from_multi_grp(uint32_t multi_ip,uint32_t *ip_list, uint32_t ip_num);
 extern int list_multi_node_and_vm_ip(uint32_t multi_ip, struct tmcc_nl_show_service_st *get_vm_ip);
 extern void get_all_multi_drop_pkt_stats(struct multi_server_drop_stats *k_stats);
 extern void multi_grp_stats(uint16_t grp_idx, uint16_t len); 

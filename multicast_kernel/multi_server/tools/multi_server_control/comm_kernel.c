@@ -69,7 +69,7 @@ void print_vm_ip_info(struct tmcc_nl_show_service_st *service)
     else
     {
         printf("Multicast IP:  "PRINT_IP_FORMAT"\n", PRINT_NIP(service->multi_ip));
-        printf("VM IP List: \n");
+        printf("VM IP List: %u\n", service->ip_num);
         for(i=0; i< service->ip_num; i++){
             printf("    "PRINT_IP_FORMAT"\n", PRINT_NIP(service->ip_list[i]));               
         }

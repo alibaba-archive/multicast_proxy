@@ -135,7 +135,7 @@ void print_vm_ip_info(struct tmcc_nl_show_service_st *service)
 			printf("Not configure multicast server ip and port!\n");
 		for(i = 0; i < service->node_cnt; i++)
 		{
-			printf("Configure Multicast Server %d:\n",i+1);
+			printf("Configure Multicast Server %d:\n", i+1);
 			printf("Server IP:  "PRINT_IP_FORMAT"\n", PRINT_NIP(service->server_ip[i]));
 			printf("UDP Port:  %u\n", service->port[i]);
 			printf("Multicast  IP:  "PRINT_IP_FORMAT"\n", PRINT_NIP(service->multi_ip[i]));

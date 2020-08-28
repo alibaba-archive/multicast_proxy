@@ -160,7 +160,7 @@ static int add_vm_ip_list(uint8_t idx, uint32_t *ip_list, uint32_t ip_num, uint3
 
 
 
-int get_vm_ip_list(uint8_t idx, uint32_t *ip_list, uint8_t ip_num)
+int get_vm_ip_list(uint8_t idx, uint32_t *ip_list, uint32_t ip_num)
 {
     int i;
 
@@ -171,7 +171,7 @@ int get_vm_ip_list(uint8_t idx, uint32_t *ip_list, uint8_t ip_num)
     {
         ip_list[i] = multi_vm[idx][i];
     }
-        return 0;
+    return 0;
 }
 
 
@@ -186,7 +186,7 @@ static void clear_vm_ip_list(uint8_t idx)
 
 
 
-int append_vm_ip_list(uint32_t multi_ip,uint32_t *ip_list, uint8_t ip_num)
+int append_vm_ip_list(uint32_t multi_ip,uint32_t *ip_list, uint32_t ip_num)
 {
     uint32_t index, row_idx;
     struct multi_node *node = NULL;
@@ -270,7 +270,7 @@ FINISH:
 }
 
 
-static void del_quit_vm_ip(uint32_t idx, uint32_t *ip_list, uint8_t ip_num, uint32_t *old_ip_num)
+static void del_quit_vm_ip(uint32_t idx, uint32_t *ip_list, uint32_t ip_num, uint32_t *old_ip_num)
 {
     int i, j = 0;
 	uint32_t last_ip = *old_ip_num;
@@ -292,7 +292,7 @@ static void del_quit_vm_ip(uint32_t idx, uint32_t *ip_list, uint8_t ip_num, uint
     }
 }
 
-int vm_quit_from_multi_grp(uint32_t multi_ip,uint32_t *ip_list, uint8_t ip_num)
+int vm_quit_from_multi_grp(uint32_t multi_ip,uint32_t *ip_list, uint32_t ip_num)
 {
     int ret = 0;
     uint32_t index, row_id;
@@ -315,7 +315,7 @@ FINISH:
     return ret;
 }
 
-int add_multi_node(uint32_t multi_ip,uint32_t *ip_list, uint8_t ip_num)
+int add_multi_node(uint32_t multi_ip,uint32_t *ip_list, uint32_t ip_num)
 {
     uint32_t index, row_id;
     uint8_t i;
