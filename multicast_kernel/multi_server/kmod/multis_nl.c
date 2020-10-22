@@ -210,7 +210,11 @@ void tmcc_rcv_skb(struct sk_buff *skb)
             break;
     }
 
+#if LINUX_VERSION_CODE <= KERNEL_VERSION(4,12,0)
     netlink_ack(skb, nlh, ret);
+#else
+    netlink_ack(skb, nlh, ret, NULL);
+#endif
     return;
 }
 

@@ -197,7 +197,11 @@ static struct nf_hook_ops multi_ops[] __read_mostly = {
 
 int multi_nf_init(void)
 {
+#if LINUX_VERSION_CODE <= KERNEL_VERSION(4,10,0)
     if(nf_register_hooks(multi_ops, ARRAY_SIZE(multi_ops)) != 0){
+#else
+    if(nf_register_net_hooks(&init_net, multi_ops, ARRAY_SIZE(multi_ops)) != 0){
+#endif
         printk(KERN_ERR "register hook in netfilter failure\n");
         return -1;
     }
@@ -207,6 +211,10 @@ int multi_nf_init(void)
 
 void multi_nf_fini(void)
 {
+#if LINUX_VERSION_CODE <= KERNEL_VERSION(4,10,0)
     nf_unregister_hooks(multi_ops, ARRAY_SIZE(multi_ops));
+#else
+    nf_unregister_net_hooks(&init_net, multi_ops, ARRAY_SIZE(multi_ops));
+#endif
 }
 
