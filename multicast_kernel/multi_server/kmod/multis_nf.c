@@ -85,8 +85,8 @@ static unsigned int tmcs_hook_local_out(void *priv,
     if(protocol != IPPROTO_UDP)
         return NF_ACCEPT;
 
-    if(!ipv4_is_multicast(iph->daddr))
-        return NF_ACCEPT;
+    //if(!ipv4_is_multicast(iph->daddr))
+    //    return NF_ACCEPT;
 
     //printk(KERN_ERR "Got a multicast packet, %04x!",daddr);
 
@@ -97,7 +97,7 @@ static unsigned int tmcs_hook_local_out(void *priv,
         return NF_ACCEPT;
     }
 
-	//printk(KERN_ERR "Get a node, vm counter is %d",node->multi_member_cnt);
+    //printk(KERN_ERR "Get a node, vm counter is %d",node->multi_member_cnt);
 
     if(node.multi_member_cnt == 0)
     {

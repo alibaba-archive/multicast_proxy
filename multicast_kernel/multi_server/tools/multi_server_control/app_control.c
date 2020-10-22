@@ -186,10 +186,12 @@ int main(int argc, char **argv)
                     printf("error: ip %s is invalid!\n\n", optarg);
                     return -1;
                 }
+#if 0
                 if(!((multi_ip >= 0xE0000000) && (multi_ip <= 0xEFFFFFFF))){
                     printf("error: ip %s is not a multicast ip!\n\n", optarg);
                     return -1;
                 }
+#endif
                 service.multi_ip = multi_ip;
                 break;
             case 'j':
