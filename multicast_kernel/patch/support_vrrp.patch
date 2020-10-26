@@ -1,0 +1,153 @@
+diff --git a/multicast_kernel/multi_client/kmod/multic_nf.c b/multicast_kernel/multi_client/kmod/multic_nf.c
+index d946bb5..22c16b3 100644
+--- a/multicast_kernel/multi_client/kmod/multic_nf.c
++++ b/multicast_kernel/multi_client/kmod/multic_nf.c
+@@ -11,6 +11,10 @@
+ #include "tmcc_nl.h"
+ #include "grp.h"
+ 
++#ifndef IPPROTO_VRRP
++#define IPPROTO_VRRP 112
++#endif
++
+ static uint64_t rx_packets = 0;
+ static uint64_t rx_bytes = 0;
+ 
+@@ -67,18 +71,17 @@ static unsigned int tmcc_hook_local_in(void *priv,
+     uint32_t old_addr;
+     int ret;
+    
+-    if(protocol != IPPROTO_UDP)
+-        return NF_ACCEPT;
+-    
+-    //printk(KERN_ERR "Got a multicast packet, %04x %04x", saddr, iph->saddr);
+-
+-    uh = skb_header_pointer(skb, ip_hdrlen(skb), sizeof(struct udphdr), &uth);
+-    if(uh == NULL)
++    if(protocol != IPPROTO_UDP && protocol != IPPROTO_VRRP)
+         return NF_ACCEPT;
+ 
+-    port = htons(uh->dest); 
++    port = 0;
++    if (protocol == IPPROTO_UDP) {
++        uh = skb_header_pointer(skb, ip_hdrlen(skb), sizeof(struct udphdr), &uth);
++        if(uh == NULL)
++            return NF_ACCEPT;
+ 
+-    //printk(KERN_ERR "before lookup port  %d %04x",port, port);
++        port = htons(uh->dest);
++    }
+ 
+     ret = lookup_ip_port_node(saddr, port, &multi_ip, &bucket, &depth);
+     if(ret != 0)
+@@ -95,20 +98,23 @@ static unsigned int tmcc_hook_local_in(void *priv,
+ 
+     old_addr = iph->daddr;
+     iph->daddr = htonl(multi_ip);
+-    /*
+-    iph->check = 0;
+-    iph->check = ip_fast_csum((__u8 *) iph, iph->ihl);
+-    uh->check = 0;
+-    uh->check = csum_tcpudp_magic(iph->saddr, iph->daddr, ntohs(iph->tot_len)-iph->ihl * 4,
+-                                  IPPROTO_UDP,csum_partial((void *)uh, ntohs(iph->tot_len)-iph->ihl * 4, 0));
+-	skb->ip_summed = CHECKSUM_UNNECESSARY;
+-    */
+-    if(!(iph->frag_off & htons(IP_OFFSET))){
+-        csum_replace4(&iph->check, old_addr, iph->daddr);
+-        if(uh->check || skb->ip_summed == CHECKSUM_PARTIAL){
+-            inet_proto_csum_replace4(&uh->check, skb, old_addr, iph->daddr, 1);
+-            if(!uh->check)
+-                uh->check = CSUM_MANGLED_0;
++
++    if (protocol == IPPROTO_UDP) {
++        /*
++           iph->check = 0;
++           iph->check = ip_fast_csum((__u8 *) iph, iph->ihl);
++           uh->check = 0;
++           uh->check = csum_tcpudp_magic(iph->saddr, iph->daddr, ntohs(iph->tot_len)-iph->ihl * 4,
++           IPPROTO_UDP,csum_partial((void *)uh, ntohs(iph->tot_len)-iph->ihl * 4, 0));
++           skb->ip_summed = CHECKSUM_UNNECESSARY;
++           */
++        if(!(iph->frag_off & htons(IP_OFFSET))){
++            csum_replace4(&iph->check, old_addr, iph->daddr);
++            if(uh->check || skb->ip_summed == CHECKSUM_PARTIAL){
++                inet_proto_csum_replace4(&uh->check, skb, old_addr, iph->daddr, 1);
++                if(!uh->check)
++                    uh->check = CSUM_MANGLED_0;
++            }
+         }
+     }
+ 	//printk(KERN_ERR "Get a node, multi ip is %04x %04x",node->multi_ip, iph->daddr);
+diff --git a/multicast_kernel/multi_server/kmod/multis_nf.c b/multicast_kernel/multi_server/kmod/multis_nf.c
+index 95b3fb9..79af0b2 100755
+--- a/multicast_kernel/multi_server/kmod/multis_nf.c
++++ b/multicast_kernel/multi_server/kmod/multis_nf.c
+@@ -11,6 +11,9 @@
+ #include "tmcc_nl.h"
+ #include "grp.h"
+ 
++#ifndef IPPROTO_VRRP
++#define IPPROTO_VRRP 112
++#endif
+ 
+ static uint64_t no_multi_grp_pkt_drop_count = 0;
+ static uint64_t no_vm_ip_list_pkt_drop_count = 0;
+@@ -82,7 +85,7 @@ static unsigned int tmcs_hook_local_out(void *priv,
+     uint8_t protocol = iph->protocol;
+     uint32_t old_addr;
+ 
+-    if(protocol != IPPROTO_UDP)
++    if(protocol != IPPROTO_UDP && protocol != IPPROTO_VRRP)
+         return NF_ACCEPT;
+ 
+     //if(!ipv4_is_multicast(iph->daddr))
+@@ -117,10 +120,6 @@ static unsigned int tmcs_hook_local_out(void *priv,
+ 
+         //printk(KERN_ERR "vm_ip %04x\n",vm_ip_list[i]);
+         iph = ip_hdr(new_skb);
+-	    //iph->ttl = 64;  //need ?
+-	    uh = skb_header_pointer(new_skb, ip_hdrlen(new_skb), sizeof(struct udphdr), &uth);
+-        if(uh == NULL)
+-            continue;
+ 
+ 		if(iph->ttl < 64)
+ 			iph->ttl = 64;
+@@ -129,19 +128,25 @@ static unsigned int tmcs_hook_local_out(void *priv,
+ 
+         old_addr = iph->daddr;
+         iph->daddr = htonl(vm_ip_list[i]);
+-        /*
+-        iph->check = 0 ;
+-        iph->check = ip_fast_csum((__u8 *) iph, iph->ihl);
+-	    uh->check = 0;
+-        uh->check = csum_tcpudp_magic(iph->saddr, iph->daddr, ntohs(iph->tot_len)-iph->ihl * 4,
+-                      IPPROTO_UDP,csum_partial((void *)uh, ntohs(iph->tot_len)-iph->ihl * 4, 0));
+-        */
+-        if(!(iph->frag_off & htons(IP_OFFSET))){
+-            csum_replace4(&iph->check, old_addr, iph->daddr);
+-            if(uh->check || new_skb->ip_summed == CHECKSUM_PARTIAL){
+-                inet_proto_csum_replace4(&uh->check, new_skb, old_addr, iph->daddr, 1);
+-                if(!uh->check)
+-                    uh->check = CSUM_MANGLED_0;
++
++        if (protocol == IPPROTO_UDP) {
++            uh = skb_header_pointer(new_skb, ip_hdrlen(new_skb), sizeof(struct udphdr), &uth);
++            if(uh == NULL)
++                continue;
++            /*
++               iph->check = 0 ;
++               iph->check = ip_fast_csum((__u8 *) iph, iph->ihl);
++               uh->check = 0;
++               uh->check = csum_tcpudp_magic(iph->saddr, iph->daddr, ntohs(iph->tot_len)-iph->ihl * 4,
++               IPPROTO_UDP,csum_partial((void *)uh, ntohs(iph->tot_len)-iph->ihl * 4, 0));
++               */
++            if(!(iph->frag_off & htons(IP_OFFSET))){
++                csum_replace4(&iph->check, old_addr, iph->daddr);
++                if(uh->check || new_skb->ip_summed == CHECKSUM_PARTIAL){
++                    inet_proto_csum_replace4(&uh->check, new_skb, old_addr, iph->daddr, 1);
++                    if(!uh->check)
++                        uh->check = CSUM_MANGLED_0;
++                }
+             }
+         }
+ 

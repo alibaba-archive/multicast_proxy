@@ -119,7 +119,7 @@ static void print_drop_stats_info(struct multi_server_drop_stats *stats, uint8_t
     printf("tx packets                     :  %lu\n", stats->tx_packets);
     printf("tx bytes                       :  %lu\n", stats->tx_bytes);
     if(action == 0){
-        printf("no_multi_grp_pkt_drop_count    :  %lu\n", stats->no_multi_grp_pkt_drop_count);
+        printf("no_multi_grp_pkt_count         :  %lu\n", stats->no_multi_grp_pkt_drop_count);
         printf("no_multi_member_pkt_drop_count :  %lu\n", stats->no_multi_member_pkt_drop_count);
         printf("route_fail_drop_count          :  %lu\n", stats->route_fail_drop_count);
         printf("no_mem_drop_count              :  %lu\n", stats->no_mem_drop_count);
